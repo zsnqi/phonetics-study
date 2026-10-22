@@ -241,33 +241,37 @@ D.articulators = {
 D.lessons = [
 /* ===== L3 ===== */
 { id: 'l3-intro', lec: 'L3', ar: 'الحروف الصوتية الأحادية', en: 'Monophthongs', min: 6, blocks: [
-  { p: 'الحروف الصوتية ' + en('(vowels)') + ' في الإنجليزية ثلاثة أنواع. يفرّق بينها سؤال واحد: هل يبقى الصوت ثابتًا داخل المقطع الواحد، أو يتغيّر؟' },
+  { p: 'الحروف الصوتية ' + en('(vowels)') + ' في الإنجليزية ثلاثة أنواع. اسمعي الصوت داخل المقطع: هل يبقى كما هو، أم يتغيّر؟' },
   { tree: { root: ['English vowels', 'الحروف الصوتية'], kids: [
     ['Monophthong (Pure vowel)', 'أحادي (نقي)', 'صوت واحد ثابت داخل المقطع', 'he /hiː/'],
     ['Diphthong', 'مزدوج', 'ينتقل من صوت إلى صوت آخر داخل المقطع', 'hi /haɪ/'],
     ['Triphthong', 'ثلاثي', 'يمرّ بثلاثة أصوات متتالية داخل المقطع', 'higher /haɪə/'] ] }, src: pg('L3', 2) },
   { h: 'القصيرة والطويلة', en: 'Short / Long' },
   { compare: [
-    { t: 'Short vowels', ar: 'القصيرة مرتخية', en: 'lax', items: ['تحتاج شدًّا عضليًا وجهدًا أقل', en('less muscular tension'), '7 حروف: ' + ipa('ɪ, e, æ, ʌ, ɒ, ʊ, ə')] },
-    { t: 'Long vowels', ar: 'الطويلة مشدودة', en: 'tense', items: ['تحتاج شدًّا عضليًا وجهدًا أكبر', en('greater muscular tension'), '5 حروف: ' + ipa('iː, ɜː, ɑː, ɔː, uː')] }
+    { t: 'Short vowels', ar: 'القصيرة مرتخية', en: 'lax', items: ['تشدّين العضلات أقل وتبذلين جهدًا أقل', en('less muscular tension'), '7 حروف: ' + ipa('ɪ, e, æ, ʌ, ɒ, ʊ, ə')] },
+    { t: 'Long vowels', ar: 'الطويلة مشدودة', en: 'tense', items: ['تشدّين العضلات أكثر وتبذلين جهدًا أكبر', en('greater muscular tension'), '5 حروف: ' + ipa('iː, ɜː, ɑː, ɔː, uː')] }
   ], src: pg('L3', 4) },
   { p: 'المجموع 12 حرفًا ' + en('(12 pure vowels)') + '. ورمز الحرف الطويل فيه علامة الطول ' + ipa('ː') + '.' },
   { h: 'ما الفرق بين القصير والطويل؟', en: 'Quantity & Quality' },
   { def: ['Quantity (length)', 'الطول', 'Long vowels tend to be longer than the short vowels "in similar contexts".', 'الحرف الطويل أطول من القصير إذا جاءا في كلمات متشابهة.'], src: pg('L3', 5) },
-  { def: ['Quality', 'نوع الصوت', 'resulting from the difference in tongue shape, tongue position, and lip rounding.', 'يختلف نوع الصوت نفسه بسبب شكل اللسان ومكانه وتدوير الشفتين.'], src: pg('L3', 5) },
+  { def: ['Quality', 'نوع الصوت', 'resulting from the difference in tongue shape, tongue position, and lip rounding.', 'يتغيّر الصوت عندما يتغيّر شكل اللسان أو مكانه أو شكل الشفتين.'], src: pg('L3', 5) },
   { more: 'الحرف نفسه يطول ويقصر حسب موقعه', blocks: [
-    { list: [
-      'الحرف في مقطع عليه ضغط ' + en('(stressed)') + ' أطول منه في مقطع بلا ضغط. مثال: ' + en('busy') + '، والضغط فيها على المقطع الأول.',
-      'في الكلمة ذات المقطع الواحد: الحرف في المقطع المفتوح أطول منه في المغلق. المفتوح آخره حرف صوتي، والمغلق آخره حرف ساكن. مثال: ' + en('me') + ' أطول من ' + en('mean') + '، ومثلها ' + en('may') + ' أطول من ' + en('main') + '.',
-      'وفي المقطع المغلق: يطول الحرف إذا جاء بعده حرف ساكن ' + en('voiced') + '، يعني تهتز معه الأحبال الصوتية. مثال: ' + en('ad') + ' أطول من ' + en('at') + '، ومثلها ' + en('bead') + ' أطول من ' + en('beat') + '.'
-    ], src: pg('L3', 6) } ] },
+    { p: 'يطول صوت الحرف في مقطع عليه ضغط ' + en('(stressed)') + ' مقارنة بمقطع بلا ضغط.' },
+    { p: 'مثال: ' + en('busy') + '، والضغط فيها على المقطع الأول.' },
+    { p: 'في الكلمة ذات المقطع الواحد، يطول الحرف في المقطع المفتوح أكثر من المغلق. ينتهي المفتوح بحرف صوتي. ينتهي المغلق بحرف ساكن.' },
+    { words: ['me', 'mean', 'may', 'main'] },
+    { p: 'في المقطع المغلق، يطول الحرف إذا جاء بعده حرف ساكن ' + en('voiced') + '. يعني أن الأحبال الصوتية تهتز معه.' },
+    { p: 'مثال على الساكن الذي يهتز: ' + en('ad') + '.' },
+    { p: 'ومثال على الساكن الذي لا يهتز: ' + en('at') + '.' },
+    { words: ['ad', 'at', 'bead', 'beat'], src: pg('L3', 6) }
+  ] },
   { h: 'كيف نصف الحرف؟', en: 'Tongue height · position · lips · tenseness' },
   { p: 'نصف كل حرف بأربع صفات، وبهذا الترتيب جاءت في ' + en('Assignment 2') + ':' },
   { vdesc: true },
   { note: 'للارتفاع تستخدم الدكتورة ' + en('high / mid-high / mid / mid-low / low') + '، وليس ' + en('close / open') + '. اكتبيها في الاختبار بكلماتها نفسها.' }
 ] },
 { id: 'l3-short', lec: 'L3', ar: 'الحروف القصيرة', en: 'Short vowels · lax', min: 9, blocks: [
-  { p: 'سبعة حروف قصيرة، وكلها مرتخية ' + en('(lax)') + '. <span class="dim">مرّري إصبعك على المخطط، ولاحظي أين يتحرك اللسان.</span>' },
+  { p: 'سبعة حروف قصيرة، وكلها مرتخية ' + en('(lax)') + '. <span class="dim">المسي أي حرف في المخطط لتسمعي كلمته، وانظري إلى مكانه.</span>' },
   { chart: 'short' },
   { h: 'كيف تُكتب في الكلمات؟', en: 'Transcription and spelling' },
   { spell: ['ih', 'eh', 'ae', 'oh', 'uh', 'ah', 'ax'] }
@@ -277,10 +281,14 @@ D.lessons = [
   { chart: 'long' },
   { h: 'كيف تُكتب في الكلمات؟', en: 'Transcription and spelling' },
   { spell: ['iy', 'aa', 'ao', 'uw', 'er'] },
-  { note: 'في جنوب شرق إنجلترا يُنطق الحرف المكتوب ' + en('a') + ' بالصوت ' + ipa('ɑː') + ' إذا جاء بعده أحد هذه الحروف: ' + en('s, f, th, n') + '. أمثلة: ' + en('ask, pass, after, bath, dance') + '. ' + pg('L3', 21) }
+  { note: 'في جنوب شرق إنجلترا، يُنطق الحرف المكتوب ' + en('a') + ' بصوت طويل.' },
+  { p: 'رمز هذا الصوت هو ' + ipa('ɑː') + '.' },
+  { p: 'يحدث ذلك إذا جاء بعده أحد هذه الحروف.' },
+  { words: ['s', 'f', 'th', 'n'] },
+  { words: ['ask', 'pass', 'after', 'bath', 'dance'], src: pg('L3', 21) }
 ] },
 { id: 'l3-pairs', lec: 'L3', ar: 'أزواج متشابهة', en: 'Pairs that look alike', min: 6, blocks: [
-  { p: 'في أوصاف الدكتورة أزواج متقاربة، لا يفرّق بينها إلا صفة أو صفتان. ركّزي على الفرق في كل زوج.' },
+  { p: 'بعض الحروف في أوصاف الدكتورة تتشابه كثيرًا. كل زوج يختلف في صفة أو صفتين فقط. قارنيهما لتري الفرق.' },
   { table: { head: ['الزوج', 'الفرق', 'مثال'], rows: [
     [ipa('iː') + ' ' + ipa('ɪ'), 'tense / lax', en('seat · fill')],
     [ipa('uː') + ' ' + ipa('ʊ'), 'tense / lax', en('food · put')],
@@ -294,26 +302,33 @@ D.lessons = [
 ] },
 /* ===== L4 ===== */
 { id: 'l4-intro', lec: 'L4', ar: 'الحروف المزدوجة', en: 'Diphthongs', min: 6, blocks: [
-  { def: ['Diphthongs', 'الحروف المزدوجة', 'sounds that consist of a movement or a glide from one vowel to another.', 'ينتقل فيها الصوت بسلاسة ' + en('(glide)') + ' من حرف صوتي إلى حرف صوتي آخر.'], src: pg('L4', 5) },
-  { list: [
-    'طولها مثل طول الحروف الطويلة.',
-    'الجزء الأول أطول وأقوى بكثير من الثاني. مثال: في ' + en('hi') + ' ' + ipa('haɪ') + ' الجزء ' + ipa('a') + ' أطول وأقوى، والجزء ' + ipa('ɪ') + ' أقصر وأهدأ.'
-  ], src: pg('L4', 5) },
+  { def: ['Diphthongs', 'الحروف المزدوجة', 'sounds that consist of a movement or a glide from one vowel to another.', 'تسمعين الصوت ينتقل بسلاسة ' + en('(glide)') + ' من حرف صوتي إلى حرف صوتي آخر.'], src: pg('L4', 5) },
+  { p: 'طولها مثل طول الحروف الطويلة.' },
+  { p: 'ابدئي بجزء أطول وأقوى بكثير من الثاني.' },
+  { p: 'مثال: ' + en('hi') + '.' },
+  { p: 'في النطق ' + ipa('haɪ') + '، الجزء الأول أطول وأقوى، والثاني أقصر وأهدأ.', src: pg('L4', 5) },
   { h: 'ثلاث مجموعات', en: 'Classification' },
   { tree: { root: ['Diphthongs (8)', 'الحروف المزدوجة'], kids: [
-    ['Centring', 'تتجه للوسط', 'آخرها /ə/ في وسط المخطط', 'ɪə · eə · ʊə'],
-    ['Closing → ɪ', 'صاعدة إلى ɪ', 'آخرها /ɪ/', 'eɪ · aɪ · ɔɪ'],
-    ['Closing → ʊ', 'صاعدة إلى ʊ', 'آخرها /ʊ/', 'əʊ · aʊ'] ] }, src: pg('L4', 6) },
+    ['Centring', 'تتجه للوسط', 'تنتهي بالصوت /ə/ في وسط المخطط', 'ɪə · eə · ʊə'],
+    ['Closing → ɪ', 'صاعدة إلى ɪ', 'تنتهي بالصوت /ɪ/', 'eɪ · aɪ · ɔɪ'],
+    ['Closing → ʊ', 'صاعدة إلى ʊ', 'تنتهي بالصوت /ʊ/', 'əʊ · aʊ'] ] }, src: pg('L4', 6) },
   { glide: 'all' },
-  { note: 'حيلة سريعة: آخر رمز في الحرف المزدوج يحدد مجموعته. إذا كان آخره ' + ipa('ə') + ' فهو ' + en('centring') + '، وإذا كان آخره ' + ipa('ɪ') + ' أو ' + ipa('ʊ') + ' فهو ' + en('closing') + '.' }
+  { note: 'انظري إلى الرمز في النهاية لتعرفي المجموعة.' },
+  { table: { head: ['الرمز في النهاية', 'المجموعة'], rows: [
+    [ipa('ə'), en('centring')],
+    [ipa('ɪ'), en('closing')],
+    [ipa('ʊ'), en('closing')]
+  ] } }
 ] },
 { id: 'l4-centring', lec: 'L4', ar: 'المزدوجة المتجهة للوسط', en: 'Centring diphthongs', min: 6, blocks: [
-  { def: ['Centring diphthongs', 'المتجهة للوسط', 'diphthongs that glide towards the ə (schwa) vowel.', 'تبدأ بحرف صوتي ثم تتجه إلى ' + ipa('ə') + '، وهو في وسط المخطط. لذلك اسمها ' + en('centring') + '.'], src: pg('L4', 7) },
+  { def: ['Centring diphthongs', 'المتجهة للوسط', 'diphthongs that glide towards the ə (schwa) vowel.', 'يبدأ الصوت بحرف صوتي ثم ينتهي عند ' + ipa('ə') + '. تجدين هذا الرمز في وسط المخطط. لذلك اسمها ' + en('centring') + '.'], src: pg('L4', 7) },
   { glide: 'centring' },
-  { note: 'في كل أمثلتها في المحاضرة حرف ' + en('r') + ' مكتوب لا يُنطق، مثل ' + en('beard, aired, tour') + '. لكن هذا وحده لا يكفي، فالحرف ' + en('r') + ' لا يُنطق أيضًا في ' + en('car, bird, horse') + '، والحرف الصوتي فيها طويل وليس مزدوجًا.' }
+  { p: 'تحتوي أمثلتها كلها على الحرف ' + en('r') + ' الذي لا يُنطق.' },
+  { words: ['beard', 'aired', 'tour'] },
+  { rsheet: true }
 ] },
 { id: 'l4-closing-i', lec: 'L4', ar: 'الصاعدة إلى ɪ', en: 'Closing diphthongs ending in /ɪ/', min: 7, blocks: [
-  { def: ['Closing diphthongs', 'المزدوجة الصاعدة', 'characterized by a glide from a relatively more open vowel towards a relatively closer vowel.', 'تبدأ بحرف يكون فيه الفم أوسع واللسان أنزل، ثم يصعد اللسان نحو حرف أعلى وأضيق. ولأن الفم ينغلق قليلًا، اسمها ' + en('closing') + '.'], src: pg('L4', 9) },
+  { def: ['Closing diphthongs', 'المزدوجة الصاعدة', 'characterized by a glide from a relatively more open vowel towards a relatively closer vowel.', 'يبدأ الصوت بحرف أوسع، وينتهي بحرف أضيق. لذلك اسمها ' + en('closing') + '.'], src: pg('L4', 9) },
   { glide: 'closing-i' },
   { h: 'ثلاث كلمات متشابهة', en: 'buy · boy · bay' },
   { table: { head: ['الكلمة', 'النطق', 'الحرف المزدوج'], rows: [[en('buy'), ipa('baɪ'), ipa('aɪ')], [en('boy'), ipa('bɔɪ'), ipa('ɔɪ')], [en('bay'), ipa('beɪ'), ipa('eɪ')]] }, src: pg('L4', 13) }
@@ -324,59 +339,66 @@ D.lessons = [
   { table: { head: ['الكلمة', 'النطق', 'الحرف المزدوج'], rows: [[en('found'), ipa('faʊnd'), ipa('aʊ')], [en('phoned'), ipa('fəʊnd'), ipa('əʊ')], [en('now'), ipa('naʊ'), ipa('aʊ')], [en('know'), ipa('nəʊ'), ipa('əʊ')], [en('loud'), ipa('laʊd'), ipa('aʊ')], [en('load'), ipa('ləʊd'), ipa('əʊ')]] }, src: pg('L4', 17) }
 ] },
 { id: 'l4-tri', lec: 'L4', ar: 'الحروف الثلاثية', en: 'Triphthongs', min: 6, blocks: [
-  { def: ['Triphthongs', 'الحروف الثلاثية', 'a glide from one vowel to another and then to a third, produced rapidly and without interruption.', 'ينتقل الصوت من حرف صوتي إلى ثانٍ ثم إلى ثالث، بسرعة وبلا توقف.'], src: pg('L4', 20) },
-  { p: 'القاعدة في المحاضرة: ' + en('the five closing diphthongs with /ə/ added on the end') + '. يعني: خذي الحروف المزدوجة الصاعدة الخمسة، وأضيفي ' + ipa('ə') + ' في آخرها.' },
+  { def: ['Triphthongs', 'الحروف الثلاثية', 'a glide from one vowel to another and then to a third, produced rapidly and without interruption.', 'تسمعين ثلاثة أصوات تتتابع بسرعة، دون توقف بينها.'], src: pg('L4', 20) },
+  { p: 'القاعدة في المحاضرة: ' + en('the five closing diphthongs with /ə/ added on the end') + '. اختاري واحدًا من الحروف المزدوجة الصاعدة الخمسة. ثم أضيفي ' + ipa('ə') + ' في آخره.' },
   { glide: 'tri' },
-  { note: 'هي أعقد نوع من الحروف الصوتية، لأنها صعبة النطق، ويصعب تمييزها إذا لم تُنطق بعناية. ' + pg('L4', 20) }
+  { note: 'هذه الحروف أعقد نوع من الحروف الصوتية. يصعب نطقها وتمييزها إذا لم تنطقيها بعناية. ' + pg('L4', 20) }
 ] },
 { id: 'l4-rpga', lec: 'L4', ar: 'اللهجة البريطانية والأمريكية', en: 'RP / GA vowels', min: 4, blocks: [
-  { p: 'تقارن الدكتورة بين اللهجة البريطانية ' + en('(RP)') + ' واللهجة الأمريكية ' + en('(GA)') + ' في الحروف الصوتية:' },
+  { p: 'تقارن الدكتورة اللهجة البريطانية ' + en('(RP)') + ' بالأمريكية في الحروف الصوتية.' },
+  { p: 'اسم الأمريكية في المحاضرة ' + en('(GA)') + '.' },
   { table: { head: ['', 'RP', 'GA'], rows: [
     ['الحروف القصيرة', '7، وفيها ' + ipa('ɒ'), '7، وفيها ' + ipa('ɑ') + ' بدلًا منه'],
     ['مثال', en('hot') + ' ' + ipa('hɒt'), en('hot') + ' ' + ipa('hɑt')],
     ['الحروف الطويلة', '5', '5، الحروف نفسها'],
     ['الحروف المزدوجة', '8: centring + closing', '5: closing فقط']
   ] }, src: pg('L4', 24) + ' ' + pg('L4', 26) },
-  { note: 'يعني أن اللهجة الأمريكية ' + en('(GA)') + ' ليس فيها المجموعة المتجهة للوسط: ' + ipa('ɪə, eə, ʊə') + '.' }
+  { note: 'يعني أن اللهجة الأمريكية ' + en('(GA)') + ' لا تحتوي على هذه الحروف المزدوجة.' },
+  { list: [ipa('ɪə'), ipa('eə'), ipa('ʊə')] },
 ] },
 /* ===== L1 ===== */
 { id: 'l1-ling', lec: 'L1', ar: 'علم اللغة وفروعه', en: 'Linguistics', min: 5, blocks: [
-  { def: ['Linguistics', 'علم اللغة', 'the scientific study of human language.', 'الدراسة العلمية للغة البشرية.'], src: pg('L1', 3) },
+  { def: ['Linguistics', 'علم اللغة', 'the scientific study of human language.', 'يدرس لغة البشر بطريقة علمية.'], src: pg('L1', 3) },
   { tree: { root: ['Theoretical linguistics', 'علم اللغة النظري'], kids: [
     ['Sound', 'الصوت', 'Phonetics · Phonology', ''],
     ['Structure', 'البنية', 'Morphology · Syntax', ''],
     ['Meaning', 'المعنى', 'Semantics · Pragmatics', ''] ] }, src: pg('L1', 4) },
   { table: { head: ['الفرع', 'ماذا يدرس'], rows: [
-    [en('Phonetics'), 'خصائص أصوات الكلام'], [en('Phonology'), 'نظام الأصوات وأنماطها في لغة معيّنة'], [en('Morphology'), 'بنية الكلمات'],
-    [en('Syntax'), 'بنية العبارات والجمل'], [en('Semantics'), 'معنى الكلمات والعبارات والجمل'], [en('Pragmatics'), 'ما يقصده المتكلم، وكيف نفهم منه أكثر مما يقول']
+    [en('Phonetics'), 'خصائص أصوات الكلام'], [en('Phonology'), 'نظام الأصوات وأنماطها في لغة معيّنة'], [en('Morphology'), 'كيف تتكوّن الكلمات'],
+    [en('Syntax'), 'كيف تتكوّن العبارات والجمل'], [en('Semantics'), 'معنى الكلمات والعبارات والجمل'], [en('Pragmatics'), 'ما يقصده المتكلم، وكيف نفهم منه أكثر مما يقول']
   ] }, src: pg('L1', 4) },
-  { def: ['Applied linguistics', 'علم اللغة التطبيقي', 'the application of linguistic theories, methods, and findings to solve the language problems which have arisen in other areas of experience.', 'تطبيق نظريات علم اللغة ومناهجه ونتائجه لحل مشكلات لغوية في مجالات أخرى.'], src: pg('L1', 5) },
-  { more: 'فروع علم اللغة التطبيقي', blocks: [{ p: en('Psycholinguistics · Sociolinguistics · Anthropological linguistics · Stylistics · Computational linguistics · TESL and TEFL · CALL · Language acquisition and learning') }] },
-  { def: ['RP', 'النطق البريطاني المعياري', 'the accent normally chosen as the standard for people learning the English spoken in England.', 'اللهجة المعيارية لمن يتعلم إنجليزية إنجلترا، وهي لهجة أغلب مذيعي ' + en('BBC') + '. الاسم المفضّل لها: ' + en('BBC pronunciation') + '.'], src: pg('L1', 6) }
+  { def: ['Applied linguistics', 'علم اللغة التطبيقي', 'the application of linguistic theories, methods, and findings to solve the language problems which have arisen in other areas of experience.', 'نستخدم نظريات علم اللغة وطرقه ونتائجه لحل مشكلات اللغة في مجالات أخرى.'], src: pg('L1', 5) },
+  { more: 'فروع علم اللغة التطبيقي', blocks: [
+    { p: 'له ثمانية فروع في المحاضرة:' },
+    { list: [en('Psycholinguistics'), en('Sociolinguistics'), en('Anthropological linguistics'), en('Stylistics'), en('Computational linguistics'), en('TESL and TEFL'), en('CALL'), en('Language acquisition and learning')] }
+  ] },
+  { def: ['RP', 'النطق البريطاني المعياري', 'the accent normally chosen as the standard for people learning the English spoken in England.', 'يتعلمها عادةً من يدرسون إنجليزية إنجلترا. يتحدث بها أغلب مذيعي ' + en('BBC') + '. الاسم المفضّل لها: ' + en('BBC pronunciation') + '.'], src: pg('L1', 6) }
 ] },
 { id: 'l1-phon', lec: 'L1', ar: 'علم الأصوات والنظام الصوتي', en: 'Phonetics vs Phonology', min: 5, blocks: [
   { compare: [
-    { t: 'Phonetics', ar: 'علم الأصوات', items: ['خصائص الأصوات: كيف تُنطق، وكيف تنتقل، وكيف يسمعها السامع', 'الجانب المادي', '3 فروع'] },
-    { t: 'Phonology', ar: 'علم النظام الصوتي', items: ['نظام الأصوات وأنماطها في لغة معيّنة', 'الجانب الذهني المجرّد', 'فرعان'] }
+    { t: 'Phonetics', ar: 'علم الأصوات', items: ['يدرس كيف ننطق الأصوات وكيف تنتقل وكيف نسمعها', 'يهتم بالأصوات التي ننطقها ونسمعها', '3 فروع'] },
+    { t: 'Phonology', ar: 'علم النظام الصوتي', items: ['نظام الأصوات وأنماطها في لغة معيّنة', 'يهتم بنظام الأصوات في الذهن', 'فرعان'] }
   ], src: pg('L1', 7) + ' ' + pg('L1', 9) },
   { h: 'فروع علم الأصوات', en: 'Three branches' },
-  { table: { head: ['الفرع', 'يدرس'], rows: [[en('Articulatory'), 'كيف تُنطق الأصوات'], [en('Acoustic'), 'كيف تنتقل الأصوات في الهواء على شكل موجات'], [en('Auditory / perceptual'), 'كيف يدرك السامع الأصوات']] }, src: pg('L1', 7) },
+  { table: { head: ['الفرع', 'يدرس'], rows: [[en('Articulatory'), 'كيف ننطق الأصوات'], [en('Acoustic'), 'كيف تنتقل الأصوات في الهواء على شكل موجات'], [en('Auditory / perceptual'), 'كيف نسمع الأصوات ونفهمها']] }, src: pg('L1', 7) },
   { h: 'فروع علم النظام الصوتي', en: 'Two branches' },
   { table: { head: ['الفرع', 'يدرس'], rows: [[en('Segmental'), 'يقسم الكلام إلى وحدات منفصلة. من موضوعاته: ' + en('phoneme, allophone, syllable')], [en('Suprasegmental'), 'صفات تمتد على أكثر من صوت، مثل الضغط والتنغيم ' + en('(stress, intonation)')]] }, src: pg('L1', 9) }
 ] },
 { id: 'l1-phoneme', lec: 'L1', ar: 'الفونيم والألوفون', en: 'Phoneme · Allophone · IPA', min: 6, blocks: [
-  { def: ['Phoneme', 'الفونيم', 'the meaning-distinguishing sound unit in a language.', 'وحدة صوتية تفرّق بين المعاني: إذا غيّرتِها تغيّر معنى الكلمة.'], src: pg('L1', 11) },
-  { p: 'الكلمات ' + en('pit, pat, pot, pet, put') + ' تختلف في صوت واحد، لذلك هذه الأصوات فونيمات. وفي نظام ' + en('RP') + ' <b>44</b> فونيمًا.' },
-  { def: ['Allophone', 'الألوفون', 'the different realizations of a phoneme according to its context.', 'صور مختلفة للفونيم الواحد حسب موقعه في الكلام. لا تغيّر المعنى، ومتشابهة جدًا، وكل صورة تأتي في موقع مختلف.'], src: pg('L1', 15) },
+  { def: ['Phoneme', 'الفونيم', 'the meaning-distinguishing sound unit in a language.', 'صوت يغيّر معنى الكلمة إذا استبدلتِه بصوت آخر.'], src: pg('L1', 11) },
+  { p: 'انظري إلى هذه الكلمات.' },
+  { words: ['pit', 'pat', 'pot', 'pet', 'put'] },
+  { p: 'تختلف في صوت واحد، لذلك هذه الأصوات فونيمات. وفي نظام ' + en('RP') + ' <b>44</b> فونيمًا.' },
+  { def: ['Allophone', 'الألوفون', 'the different realizations of a phoneme according to its context.', 'قد تنطقين الفونيم نفسه بطرق مختلفة حسب موقعه في الكلام. هذه الطرق تتشابه جدًا ولا تغيّر المعنى. كل طريقة تأتي في موقع مختلف.'], src: pg('L1', 15) },
   { def: ['IPA', 'الأبجدية الصوتية الدولية', 'special symbols used in phonemic transcription to represent speech sounds.', 'رموز خاصة نكتب بها الأصوات، ونضعها بين خطين مائلين ' + ipa(' ') + '.'], src: pg('L1', 12) },
   { h: 'الكتابة لا تطابق النطق', en: 'Spelling ≠ sound' },
   { table: { head: ['الكلمات', 'الصوت'], rows: [[en('Cat = kitchen'), ipa('k')], [en('Phone = Floor = laugh'), ipa('f')], [en('Sea ≠ Sure'), ipa('s') + ' ≠ ' + ipa('ʃ')], [en('Green ≠ Garage'), ipa('g') + ' ≠ ' + ipa('dʒ')]] }, src: pg('L1', 12) },
   { more: 'جدول رموز RP (44)', blocks: [{ rptable: true }] }
 ] },
 { id: 'l1-supra', lec: 'L1', ar: 'المقطع والضغط والتنغيم', en: 'Syllable · Stress · Intonation', min: 5, blocks: [
-  { def: ['Syllable', 'المقطع', 'a unit of pronunciation consisting of a basic vowel sound and optional consonants before or after the vowel.', 'وحدة نطق فيها حرف صوتي أساسي، وقد يأتي قبله أو بعده حروف ساكنة. نعدّ المقاطع بعدد الحروف الصوتية المنطوقة، لا بالحروف المكتوبة.'], src: pg('L1', 16) },
+  { def: ['Syllable', 'المقطع', 'a unit of pronunciation consisting of a basic vowel sound and optional consonants before or after the vowel.', 'جزء من الكلمة فيه حرف صوتي أساسي. قد تأتي حروف ساكنة قبله أو بعده. لعدّ المقاطع، عدّي أصوات الحروف الصوتية التي تسمعينها، لا الحروف المكتوبة.'], src: pg('L1', 16) },
   { table: { head: ['الكلمة', 'التقطيع', 'عدد المقاطع'], rows: [[en('Dog'), ipa('dɒg'), '1'], [en('Busy'), ipa('ˈbɪz.i'), '2'], [en('Hungry'), ipa('ˈhʌŋ.gri'), '2'], [en('Adorable'), ipa('əˈdɔː.rə.bəl'), '4'], [en('University'), ipa('ˌjuː.nɪˈvɜː.sə.ti'), '5'], [en('College'), ipa('ˈkɒl.ɪdʒ'), '2']] }, src: pg('L1', 18) },
-  { def: ['Stress', 'الضغط', 'the relative strength in the pronunciation of a syllable, making it louder and longer.', 'المقطع الذي عليه ضغط ' + en('(stressed)') + ' أعلى صوتًا وأطول. أمثلة: ' + en('ba-NA-na, BEAU-ti-ful, in-for-MA-tion') + '.'], src: pg('L1', 20) },
+  { def: ['Stress', 'الضغط', 'the relative strength in the pronunciation of a syllable, making it louder and longer.', 'تنطقين المقطع الذي عليه ضغط ' + en('(stressed)') + ' بصوت أعلى ووقت أطول. أمثلة: ' + en('ba-NA-na, BEAU-ti-ful, in-for-MA-tion') + '.'], src: pg('L1', 20) },
   { def: ['Intonation', 'التنغيم', 'the use of the pitch of the voice to convey meaning.', 'نغمة الصوت ' + en('(pitch)') + ' ترتفع أو تنخفض، فيتغيّر المعنى.'], src: pg('L1', 22) },
   { table: { head: ['النغمة', 'المعنى', 'مثال'], rows: [['هابطة ↘', 'جملة خبرية، أو ملل', en('The glass is on the table.')], ['صاعدة ↗', 'سؤال جوابه نعم أو لا، أو استغراب', en('The glass is on the table?')]] }, src: pg('L1', 22) }
 ] },
@@ -389,21 +411,34 @@ D.lessons = [
     [en('Alveolar ridge'), 'اللثة: بين الأسنان الأمامية العليا والحنك الصلب، وسطحها فيه نتوءات صغيرة'],
     [en('Hard palate'), 'الحنك الصلب: سقف الفم، وسطحه أملس وصلب'],
     [en('Soft palate (velum)'), 'الحنك اللين: الجزء اللين في آخر سقف الفم. إذا ارتفع خرج الهواء من الفم، وإذا نزل خرج من الأنف'],
-    [en('Pharynx'), 'البلعوم: أنبوب عضلي على شكل قمع، يبدأ فوق الحنجرة'],
-    [en('Larynx'), 'الحنجرة: غضروفان كبيران مجوّفان فوق القصبة الهوائية، وفيها الأحبال الصوتية'],
+    [en('Pharynx'), 'البلعوم أنبوب من عضلات يشبه القمع. يبدأ فوق الحنجرة'],
+    [en('Larynx'), 'تتكوّن الحنجرة من غضروفين كبيرين فيهما فراغ. تقع فوق القصبة الهوائية، وفيها الأحبال الصوتية'],
     [en('Tongue'), 'اللسان: خمسة أجزاء، هي ' + en('tip, blade, front, back, root')]
   ] }, src: pg('L2', 8) + ' ' + pg('L2', 13) }
 ] },
 { id: 'l2-voicing', lec: 'L2', ar: 'اهتزاز الأحبال الصوتية', en: 'Voicing', min: 5, blocks: [
   { def: ['Voicing', 'اهتزاز الأحبال الصوتية', 'if vocal folds vibrate or not.', 'هل تهتز الأحبال الصوتية ' + en('(vocal folds)') + ' مع الحرف أو لا؟'], src: pg('L2', 20) },
   { compare: [
-    { t: 'Voiceless', ar: 'بلا اهتزاز', items: ['الأحبال الصوتية متباعدة', 'الهواء يمرّ بحرية', en('p, t, k, f, θ, s, ʃ, tʃ, h')] },
-    { t: 'Voiced', ar: 'مع اهتزاز', items: ['الأحبال الصوتية متقاربة', 'الهواء يجعلها تهتز', en('b, d, g, v, ð, z, ʒ, dʒ, m, n, ŋ, l, r, w, j')] }
+    { t: 'Voiceless', ar: 'بلا اهتزاز', items: ['تبتعد الأحبال الصوتية عن بعضها', 'الهواء يمرّ بحرية'] },
+    { t: 'Voiced', ar: 'مع اهتزاز', items: ['تقترب الأحبال الصوتية من بعضها', 'الهواء يجعلها تهتز'] }
   ], src: pg('L2', 21) },
-  { p: 'جرّبي: ضعي يدك على حلقك، وانطقي ' + ipa('s') + ' ثم ' + ipa('z') + '. ستحسّين بالاهتزاز مع ' + ipa('z') + ' فقط.' },
-  { table: { head: ['وضع الأحبال الصوتية', 'الصوت'], rows: [['Wide apart', 'متباعدة: تنفّس عادي، وحروف بلا اهتزاز مثل ' + ipa('p, f, s')], ['Narrow glottis', 'فتحة ضيقة: ' + ipa('h')], ['Vibration', 'تهتز: حروف ' + en('voiced') + ' مثل ' + ipa('b, d, g')], ['Tightly closed', 'مغلقة تمامًا: ' + ipa('ʔ') + '، واسمه ' + en('glottal stop')]] }, src: pg('L2', 9) },
-  { note: 'كل الحروف الصوتية ' + en('voiced') + '، يعني تهتز معها الأحبال الصوتية. وكلها تخرج من الفم ' + en('(oral)') + '، لأن الحنك اللين مرفوع. ' + pg('L2', 49) },
-  { more: 'الحروف القوية والضعيفة ' + en('(fortis / lenis)'), blocks: [{ p: 'في المحاضرة اسم آخر للحروف التي بلا اهتزاز: ' + en('fortis') + '، يعني قوية: ' + en('p, t, k, f, θ, s, ʃ') + '. وأما التي فيها اهتزاز فاسمها ' + en('lenis') + '، يعني ضعيفة: ' + en('b, d, g, v, ð, z, ʒ') + '. ' + pg('L2', 39) }] }
+  { table: { head: ['الاهتزاز', 'أمثلة'], rows: [
+    ['بلا اهتزاز', en('p, t, k, f, θ, s, ʃ, tʃ, h')],
+    ['مع اهتزاز', en('b, d, g, v, ð, z, ʒ, dʒ, m, n, ŋ, l, r, w, j')]
+  ] }, src: pg('L2', 21) },
+  { p: 'جرّبي: ضعي يدك على حلقك. انطقي ' + ipa('s') + '. ثم انطقي ' + ipa('z') + '. ستحسّين بالاهتزاز مع ' + ipa('z') + ' فقط.' },
+  { table: { head: ['وضع الأحبال الصوتية', 'الصوت'], rows: [['Wide apart', 'متباعدة: تنفّس عادي، وحروف بلا اهتزاز مثل ' + ipa('p, f, s')], ['Narrow glottis', 'فتحة ضيقة: ' + ipa('h')], ['Vibration', 'تهتز: حروف ' + en('voiced') + '. أمثلتها ' + ipa('b, d, g')], ['Tightly closed', 'تنغلق تمامًا: ' + ipa('ʔ') + '، واسمه ' + en('glottal stop')]] }, src: pg('L2', 9) },
+  { note: 'تهتز الأحبال الصوتية مع كل الحروف الصوتية ' + en('voiced') + '. يخرج هواؤها من الفم ' + en('(oral)') + '. يحدث ذلك لأن الحنك اللين يرتفع. ' + pg('L2', 49) },
+  { more: 'الحروف القوية والضعيفة ' + en('(fortis / lenis)'), blocks: [
+    { p: 'في المحاضرة اسم آخر للحروف التي بلا اهتزاز: ' + en('fortis') + '.' },
+    { p: 'يعني قوية. الحروف في الجدول أدناه.' },
+    { p: 'وأما التي فيها اهتزاز فاسمها ' + en('lenis') + '.' },
+    { p: 'يعني ضعيفة. الحروف في الجدول أدناه.' },
+    { table: { head: ['الاسم', 'الحروف'], rows: [
+      [en('fortis'), en('p, t, k, f, θ, s, ʃ')],
+      [en('lenis'), en('b, d, g, v, ð, z, ʒ')]
+    ] }, src: pg('L2', 39) }
+  ] }
 ] },
 { id: 'l2-place', lec: 'L2', ar: 'مكان وطريقة النطق', en: 'Place & manner', min: 7, blocks: [
   { table: { head: ['المكان', 'العضوان', 'الأصوات'], rows: [
@@ -412,18 +447,26 @@ D.lessons = [
     [en('Velar'), 'مؤخّر اللسان + الحنك اللين', ipa('k, g, ŋ, w')], [en('Uvular'), 'مؤخّر اللسان + اللهاة', 'من العربية: ' + ipa('q')], [en('Pharyngeal'), 'جذر اللسان + جدار البلعوم', 'من العربية: ' + ipa('ʕ, ħ')],
     [en('Glottal'), 'فتحة الأحبال الصوتية ' + en('(glottis)'), ipa('ʔ, h')]
   ] }, src: pg('L2', 23) },
-  { note: 'تنبيه: الشريحة 57 وصفت ' + ipa('θ, ð') + ' بأنها ' + en('labiodental') + '، لكن باقي المحاضرة تقول ' + en('dental') + '، وهو الصحيح.' },
+  { note: 'تنبيه: الشريحة 57 وصفت هذين الصوتين وصفًا مختلفًا.' },
+  { p: 'الوصف في الشريحة: ' + en('labiodental') + '.' },
+  { p: 'لكن باقي المحاضرة تقول ' + en('dental') + '، وهو الصحيح.' },
   { h: 'طريقة النطق', en: 'Manner of articulation' },
   { table: { head: ['الطريقة', 'الأصوات'], rows: [[en('Stops / plosives'), ipa('p, b, t, d, k, g')], [en('Fricatives'), ipa('f, v, θ, ð, s, z, ʃ, ʒ, h')], [en('Affricates'), ipa('tʃ, dʒ')], [en('Approximants'), ipa('w, j') + ' glides · ' + ipa('l, r') + ' liquids'], [en('Nasals'), ipa('m, n, ŋ')]] }, src: pg('L2', 36) },
-  { p: 'نصف الحرف الساكن بثلاث صفات بالترتيب: ' + en('voicing + place + manner') + '. مثال: ' + ipa('k') + ' = ' + en('voiceless, velar, stop') + '. ومثال آخر: ' + ipa('m') + ' = ' + en('voiced, bilabial, nasal') + '.' }
+  { p: 'نصف الحرف الساكن بثلاث صفات بهذا الترتيب:' },
+  { list: [en('voicing'), en('place'), en('manner')] },
+  { p: 'مثال: ' + ipa('k') + '.' },
+  { table: { head: ['الصوت', 'الوصف'], rows: [
+    [ipa('k'), en('voiceless, velar, stop')],
+    [ipa('m'), en('voiced, bilabial, nasal')]
+  ] } }
 ] },
 { id: 'l2-vc', lec: 'L2', ar: 'الحروف الصوتية والساكنة', en: 'Vowels vs consonants', min: 5, blocks: [
   { compare: [
-    { t: 'Consonants', ar: 'الحروف الساكنة', items: ['يُغلق ممر الهواء أو يضيق', 'تأتي في أطراف المقطع ' + en('(onset / coda)')] },
-    { t: 'Vowels', ar: 'الحروف الصوتية', items: ['يمرّ الهواء بلا اعتراض تقريبًا', 'أوضح في السمع، فتبدو أعلى وأطول ' + en('(more sonorous)'), 'تكون قلب المقطع ' + en('(nucleus)')] }
+    { t: 'Consonants', ar: 'الحروف الساكنة', items: ['ينغلق ممر الهواء أو يضيق', 'تأتي في أطراف المقطع ' + en('(onset / coda)')] },
+    { t: 'Vowels', ar: 'الحروف الصوتية', items: ['يمرّ الهواء دون أن يسدّ طريقه شيء تقريبًا', 'تسمعينها أوضح وأعلى وأطول ' + en('(more sonorous)'), 'تكون الجزء الأساسي في المقطع، أي قلبه ' + en('(nucleus)')] }
   ], src: pg('L2', 16) },
-  { list: ['يختلفان في النطق ' + en('(Obstruction)') + ': الحرف الساكن يسدّ الهواء أو يضيّقه، والحرف الصوتي لا يعترضه تقريبًا.', 'وفي قوة الصوت ' + en('(Prominence)') + ': الحرف الصوتي أوضح، فنسمعه أعلى وأطول.', 'وفي مكانهما من المقطع ' + en('(Syllabic distribution)') + ': الحرف الصوتي قلب المقطع. وهذا هو الفرق الأهم.'], src: pg('L2', 17) },
-  { note: 'الحروف ' + ipa('h, w, j') + ' لا تعترض الهواء، لكنها حروف ساكنة، لأنها لا تكون قلب المقطع أبدًا.' },
+  { list: ['يختلفان في النطق ' + en('(Obstruction)') + ': الحرف الساكن يسدّ الهواء أو يضيّقه، والحرف الصوتي لا يعترضه تقريبًا.', 'وفي قوة الصوت ' + en('(Prominence)') + ': الحرف الصوتي أوضح، فنسمعه أعلى وأطول.', 'نقارن أيضًا مكانهما داخل المقطع ' + en('(Syllabic distribution)') + ': الحرف الصوتي هو الجزء الأساسي في المقطع، أي قلبه. وهذا هو الفرق الأهم.'], src: pg('L2', 17) },
+  { note: 'الصوت ' + ipa('h') + ' لا يعترض الهواء، لكنه حرف ساكن. وينطبق ذلك على الصوت ' + ipa('w') + '. وينطبق أيضًا على الصوت ' + ipa('j') + '. السبب: هذه الأصوات الثلاثة لا تكون قلب المقطع أبدًا.' },
   { h: 'بماذا تختلف الحروف الصوتية؟', en: 'Height · position · lip rounding' },
   { table: { head: ['الصفة', 'الشرح'], rows: [[en('Tongue height'), 'المسافة بين سطح اللسان وسقف الفم'], [en('Tongue position'), 'أي جزء من اللسان هو الأعلى: الأمامي أو الخلفي'], [en('Lip rounding'), 'شكل الشفتين: ' + en('rounded, spread, neutral')]] }, src: pg('L2', 51) }
 ] }
@@ -444,27 +487,27 @@ D.plan = [
    type: mcq | tf | match | sort        */
 D.questions = [
 /* L1 */
-{ id: 'q1-1', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Linguistics is:', o: ['the scientific study of human language', 'the study of speech sounds only', 'the analysis of the structure of words', 'the study of meaning'], a: 0, why: 'تعريف الشريحة: ' + en('the scientific study of human language') + '.', src: 'L1 · ص3' },
-{ id: 'q1-2', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Which branch is "the analysis of the structure of phrases and sentences"?', o: ['Morphology', 'Semantics', 'Syntax', 'Phonology'], a: 2, why: 'الجواب ' + en('Syntax') + ': يحلل بنية العبارات والجمل. أما ' + en('Morphology') + ' فيحلل بنية الكلمات.', src: 'L1 · ص4' },
-{ id: 'q1-3', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Phonetics and Phonology are grouped under:', o: ['Sound', 'Structure', 'Meaning', 'Applied linguistics'], a: 0, why: 'في مخطط الشريحة، تحت ' + en('Sound') + ' فرعان: ' + en('Phonetics, Phonology') + '.', src: 'L1 · ص4' },
+{ id: 'q1-1', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Linguistics is:', o: ['the scientific study of human language', 'the study of speech sounds only', 'the analysis of the structure of words', 'the study of meaning'], a: 0, why: 'يدرس هذا العلم لغة الإنسان. تعريف الشريحة: ' + en('the scientific study of human language') + '.', src: 'L1 · ص3' },
+{ id: 'q1-2', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Which branch is "the analysis of the structure of phrases and sentences"?', o: ['Morphology', 'Semantics', 'Syntax', 'Phonology'], a: 2, why: 'الجواب ' + en('Syntax') + ': يحلل كيف تتكوّن العبارات والجمل. أما ' + en('Morphology') + ' فيحلل كيف تتكوّن الكلمات.', src: 'L1 · ص4' },
+{ id: 'q1-3', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Phonetics and Phonology are grouped under:', o: ['Sound', 'Structure', 'Meaning', 'Applied linguistics'], a: 0, why: 'يدرس هذان الفرعان أصوات الكلام. في مخطط الشريحة، تحت ' + en('Sound') + ' فرعان. الأول ' + en('Phonetics') + '. والثاني ' + en('Phonology') + '.', src: 'L1 · ص4' },
 { id: 'q1-4', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Which is a branch of applied linguistics?', o: ['Pragmatics', 'Morphology', 'Sociolinguistics', 'Phonetics'], a: 2, why: 'الجواب ' + en('Sociolinguistics') + '، وهو من فروع علم اللغة التطبيقي. الخيارات الأخرى فروع نظرية.', src: 'L1 · ص5' },
 { id: 'q1-5', lec: 'L1', type: 'mcq', topic: 'l1', q: 'The branch of phonetics that studies how sounds are transmitted as sound waves in the air:', o: ['Articulatory', 'Acoustic', 'Auditory / perceptual', 'Segmental'], a: 1, why: 'الجواب ' + en('Acoustic') + ': يدرس انتقال الصوت في الهواء على شكل موجات.', src: 'L1 · ص7' },
 { id: 'q1-6', lec: 'L1', type: 'mcq', topic: 'l1', q: 'The phonemic system of RP consists of:', o: ['26 phonemes', '40 phonemes', '44 phonemes', '48 phonemes'], a: 2, why: 'في نظام ' + en('RP') + ' 44 فونيمًا.', src: 'L1 · ص11' },
-{ id: 'q1-7', lec: 'L1', type: 'mcq', topic: 'l1', q: 'A preferable name for RP is:', o: ['Standard English', 'BBC pronunciation', 'General American', 'IPA'], a: 1, why: 'في الشريحة: ' + en('a preferable name is BBC pronunciation') + '.', src: 'L1 · ص6' },
-{ id: 'q1-8', lec: 'L1', type: 'mcq', topic: 'l1', q: 'How do we count the syllables of a word?', o: ['by counting letters', 'by counting consonants', 'by counting vowel sounds', 'by counting stressed syllables'], a: 2, why: 'في الشريحة: ' + en('By counting the vowel sounds (Not letters).') + ' يعني نعدّ الحروف الصوتية المنطوقة، لا الحروف المكتوبة.', src: 'L1 · ص16' },
+{ id: 'q1-7', lec: 'L1', type: 'mcq', topic: 'l1', q: 'A preferable name for RP is:', o: ['Standard English', 'BBC pronunciation', 'General American', 'IPA'], a: 1, why: 'الاسم المفضّل لهذه اللهجة في الشريحة: ' + en('a preferable name is BBC pronunciation') + '.', src: 'L1 · ص6' },
+{ id: 'q1-8', lec: 'L1', type: 'mcq', topic: 'l1', q: 'How do we count the syllables of a word?', o: ['by counting letters', 'by counting consonants', 'by counting vowel sounds', 'by counting stressed syllables'], a: 2, why: 'المقياس هو الأصوات المنطوقة. في الشريحة: ' + en('By counting the vowel sounds (Not letters).') + ' يعني نعدّ الحروف الصوتية المنطوقة، لا الحروف المكتوبة.', src: 'L1 · ص16' },
 { id: 'q1-9', lec: 'L1', type: 'mcq', topic: 'l1', q: '"Oh, really." with a falling tone conveys:', o: ['surprise', 'boredom', 'a yes/no question', 'a statement of fact'], a: 1, why: 'مع ' + en('Oh, really.') + ' النغمة الهابطة تعني الملل، والصاعدة تعني الاستغراب.', src: 'L1 · ص22' },
-{ id: 'q1-10', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Which pair shows the same letter for two different phonemes?', o: ['Cat – kitchen', 'Phone – Floor', 'Sea – Sure', 'Floor – laugh'], a: 2, why: 'الحرف المكتوب ' + en('S') + ' يُنطق ' + ipa('s') + ' في ' + en('Sea') + '، ويُنطق ' + ipa('ʃ') + ' في ' + en('Sure') + '.', src: 'L1 · ص12' },
+{ id: 'q1-10', lec: 'L1', type: 'mcq', topic: 'l1', q: 'Which pair shows the same letter for two different phonemes?', o: ['Cat – kitchen', 'Phone – Floor', 'Sea – Sure', 'Floor – laugh'], a: 2, why: 'الحرف المكتوب ' + en('S') + ' له صوتان.' + ' الصوت الأول هو ' + ipa('s') + '. يظهر في كلمة ' + en('Sea') + '. الصوت الثاني هو ' + ipa('ʃ') + '. يظهر في كلمة ' + en('Sure') + '.', src: 'L1 · ص12' },
 { id: 'q1-11', lec: 'L1', type: 'tf', topic: 'l1', q: 'Allophones of a phoneme change the meaning of a word.', a: false, why: 'الألوفونات لا تغيّر المعنى: ' + en('do not change the meaning') + '.', src: 'L1 · ص15' },
-{ id: 'q1-12', lec: 'L1', type: 'tf', topic: 'l1', q: 'Phonology is concerned with the abstract mental aspect of sounds.', a: true, why: 'هكذا عرّفت الدكتورة ' + en('Phonology') + ': الجانب الذهني المجرّد للأصوات.', src: 'L1 · ص9' },
+{ id: 'q1-12', lec: 'L1', type: 'tf', topic: 'l1', q: 'Phonology is concerned with the abstract mental aspect of sounds.', a: true, why: 'يدرس نظام الأصوات في الذهن. هكذا عرّفت الدكتورة ' + en('Phonology') + '.', src: 'L1 · ص9' },
 { id: 'q1-13', lec: 'L1', type: 'tf', topic: 'l1', q: 'English words can begin with /rt/.', a: false, why: 'الكلمة الإنجليزية قد تبدأ بالصوتين ' + ipa('tr') + '، لكن ليس بالصوتين ' + ipa('rt') + '.', src: 'L1 · ص3' },
-{ id: 'q1-14', lec: 'L1', type: 'tf', topic: 'l1', q: 'Stress and intonation are studied in suprasegmental phonology.', a: true, why: 'من تعريف ' + en('suprasegmental') + ' في الشريحة: ' + en('features which extend over the segment, such as stress and intonation') + '.', src: 'L1 · ص9' },
-{ id: 'q1-15', lec: 'L1', type: 'tf', topic: 'l1', q: 'pit, pat, pot, pet, put differ in a single sound, so these sounds are phonemes.', a: true, why: 'الكلمات تختلف في صوت واحد، وهذا الصوت يغيّر المعنى، لذلك هذه الأصوات فونيمات.', src: 'L1 · ص11' },
+{ id: 'q1-14', lec: 'L1', type: 'tf', topic: 'l1', q: 'Stress and intonation are studied in suprasegmental phonology.', a: true, why: 'يمتد الضغط والتنغيم على أكثر من صوت. من تعريف ' + en('suprasegmental') + ' في الشريحة: ' + en('features which extend over the segment, such as stress and intonation') + '.', src: 'L1 · ص9' },
+{ id: 'q1-15', lec: 'L1', type: 'tf', topic: 'l1', q: 'pit, pat, pot, pet, put differ in a single sound, so these sounds are phonemes.', a: true, why: 'تختلف الكلمات في صوت واحد. عندما يتغيّر هذا الصوت يتغيّر المعنى. لذلك هذه الأصوات فونيمات.', src: 'L1 · ص11' },
 { id: 'q1-16', lec: 'L1', type: 'match', topic: 'l1', q: 'Match each term with its meaning', pairs: [['Phoneme', 'the meaning-distinguishing sound unit'], ['Allophone', 'a realization of a phoneme in context'], ['Stress', 'strength that makes a syllable louder and longer'], ['Intonation', 'use of pitch to convey meaning']], why: 'التعريفات من الشرائح 11، 15، 20، 22.', src: 'L1' },
 { id: 'q1-17', lec: 'L1', type: 'match', topic: 'l1', q: 'Match each branch with what it studies', pairs: [['Morphology', 'structure of words'], ['Semantics', 'meaning'], ['Articulatory phonetics', 'how sounds are produced'], ['Auditory phonetics', 'how sounds are perceived']], why: 'من الشريحة 4 والشريحة 7.', src: 'L1' },
 /* L2 */
 { id: 'q2-1', lec: 'L2', type: 'mcq', topic: 'l2', q: 'The opening between the vocal folds is called the:', o: ['pharynx', 'glottis', 'velum', 'larynx'], a: 1, why: 'الجواب ' + en('glottis') + ': الفتحة بين الأحبال الصوتية.', src: 'L2 · ص8' },
 { id: 'q2-2', lec: 'L2', type: 'mcq', topic: 'l2', q: 'The vocal folds position for /h/ is:', o: ['wide apart', 'narrow glottis', 'vibration', 'tightly closed'], a: 1, why: 'مع ' + ipa('h') + ' تكون فتحة الأحبال الصوتية ضيقة، فيمرّ الهواء منها باحتكاك، وبلا اهتزاز.', src: 'L2 · ص9' },
-{ id: 'q2-3', lec: 'L2', type: 'mcq', topic: 'l2', q: 'Vocal folds tightly closed so no air passes produce:', o: ['/h/', '/ʔ/', '/g/', '/ŋ/'], a: 1, why: 'هذا هو ' + ipa('ʔ') + '، واسمه ' + en('glottal stop') + ': الأحبال الصوتية مغلقة تمامًا، فلا يمرّ الهواء.', src: 'L2 · ص9' },
+{ id: 'q2-3', lec: 'L2', type: 'mcq', topic: 'l2', q: 'Vocal folds tightly closed so no air passes produce:', o: ['/h/', '/ʔ/', '/g/', '/ŋ/'], a: 1, why: 'تنغلق الأحبال الصوتية تمامًا، فلا يمرّ الهواء. نكتب هذا الصوت ' + ipa('ʔ') + '. اسمه ' + en('glottal stop') + '.', src: 'L2 · ص9' },
 { id: 'q2-4', lec: 'L2', type: 'mcq', topic: 'l2', q: 'When the velum is lowered, the air goes out through the nose, as in:', o: ['/k/', '/g/', '/ŋ/', '/t/'], a: 2, why: 'الجواب ' + ipa('ŋ') + '، لأنه حرف أنفي ' + en('(nasal)') + '. أما الباقي فيخرج هواؤه من الفم.', src: 'L2 · ص11' },
 { id: 'q2-5', lec: 'L2', type: 'mcq', topic: 'l2', q: '/f/ and /v/ are:', o: ['bilabial', 'labiodental', 'dental', 'alveolar'], a: 1, why: 'تُنطق بالشفة السفلى مع الأسنان العليا.', src: 'L2 · ص25' },
 { id: 'q2-6', lec: 'L2', type: 'mcq', topic: 'l2', q: '/θ/ and /ð/ are:', o: ['labiodental', 'dental', 'alveolar', 'palatal'], a: 1, why: 'تُنطق بطرف اللسان مع الأسنان العليا. تنبيه: الشريحة 57 وصفتها بأنها ' + en('labiodental') + '، وهذا خطأ.', src: 'L2 · ص26' },
@@ -473,41 +516,41 @@ D.questions = [
 { id: 'q2-9', lec: 'L2', type: 'mcq', topic: 'l2', q: 'The active articulator for /p, b, m/ is the:', o: ['upper lip', 'lower lip', 'upper teeth', 'tongue tip'], a: 1, why: 'الشفة السفلى هي التي تتحرك ' + en('(active)') + '، والعليا ثابتة.', src: 'L2 · ص24' },
 { id: 'q2-10', lec: 'L2', type: 'mcq', topic: 'l2', q: 'Vowels form the syllable:', o: ['onset', 'coda', 'nucleus', 'margins'], a: 2, why: 'الحروف الصوتية قلب المقطع ' + en('(nucleus)') + '، والحروف الساكنة في أطرافه.', src: 'L2 · ص17' },
 { id: 'q2-11', lec: 'L2', type: 'mcq', topic: 'l2', q: 'The acoustic distinction between vowels and consonants is called:', o: ['Obstruction', 'Prominence', 'Distribution', 'Aspiration'], a: 1, why: 'الجواب ' + en('Prominence') + ': الحروف الصوتية أوضح ' + en('(more sonorous)') + '، فنسمعها أعلى وأطول.', src: 'L2 · ص16' },
-{ id: 'q2-12', lec: 'L2', type: 'mcq', topic: 'l2', q: '/k/ is:', o: ['voiced, velar, stop', 'voiceless, velar, stop', 'voiceless, alveolar, stop', 'voiced, velar, nasal'], a: 1, why: 'هذا مثال الشريحة نفسه: ' + en('voiceless, velar, stop') + '.', src: 'L2 · ص46' },
-{ id: 'q2-13', lec: 'L2', type: 'mcq', topic: 'l2', q: 'voiced, labiodental, fricative =', o: ['/f/', '/v/', '/ð/', '/b/'], a: 1, why: 'الفرق بين ' + ipa('f') + ' و ' + ipa('v') + ' في الاهتزاز فقط. مع ' + ipa('v') + ' تهتز الأحبال الصوتية ' + en('(voiced)') + '.', src: 'L2 · ص47' },
-{ id: 'q2-14', lec: 'L2', type: 'mcq', topic: 'l2', q: 'Which word has an unaspirated stop?', o: ['tea', 'pea', 'spy', 'key'], a: 2, why: 'الجواب ' + en('spy') + ': إذا جاء الحرف بعد ' + ipa('s') + ' لا تخرج معه نفخة الهواء ' + en('(aspiration)') + '.', src: 'L2 · ص38' },
+{ id: 'q2-12', lec: 'L2', type: 'mcq', topic: 'l2', q: '/k/ is:', o: ['voiced, velar, stop', 'voiceless, velar, stop', 'voiceless, alveolar, stop', 'voiced, velar, nasal'], a: 1, why: 'لا تهتز الأحبال الصوتية. يلامس مؤخّر اللسان الحنك اللين، فيتوقف الهواء ثم يخرج فجأة. هذا مثال الشريحة نفسه: ' + en('voiceless, velar, stop') + '.', src: 'L2 · ص46' },
+{ id: 'q2-13', lec: 'L2', type: 'mcq', topic: 'l2', q: 'voiced, labiodental, fricative =', o: ['/f/', '/v/', '/ð/', '/b/'], a: 1, why: 'الصوتان متشابهان في مكان النطق.' + ' الأول هو ' + ipa('f') + '. الثاني هو ' + ipa('v') + '. الفرق بينهما في الاهتزاز فقط. مع ' + ipa('v') + ' تهتز الأحبال الصوتية. هذا هو معنى ' + en('(voiced)') + '.', src: 'L2 · ص47' },
+{ id: 'q2-14', lec: 'L2', type: 'mcq', topic: 'l2', q: 'Which word has an unaspirated stop?', o: ['tea', 'pea', 'spy', 'key'], a: 2, why: 'الجواب ' + en('spy') + '. إذا جاء الحرف بعد ' + ipa('s') + ' لا تخرج معه نفخة الهواء. هذا هو معنى ' + en('(aspiration)') + '.', src: 'L2 · ص38' },
 { id: 'q2-15', lec: 'L2', type: 'mcq', topic: 'l2', q: 'The lips for /iː/ in "see" are:', o: ['rounded', 'spread', 'neutral'], a: 1, why: 'الشفتان مفرودتان ' + en('(spread)') + ' كأنكِ تبتسمين.', src: 'L2 · ص55' },
 { id: 'q2-16', lec: 'L2', type: 'tf', topic: 'l2', q: 'All vowels are voiced.', a: true, why: 'الأحبال الصوتية تهتز مع كل الحروف الصوتية.', src: 'L2 · ص49' },
-{ id: 'q2-17', lec: 'L2', type: 'tf', topic: 'l2', q: 'Some English vowels are nasal.', a: false, why: 'كل الحروف الصوتية تخرج من الفم ' + en('(oral)') + '، لأن الحنك اللين مرفوع.', src: 'L2 · ص49' },
-{ id: 'q2-18', lec: 'L2', type: 'tf', topic: 'l2', q: '/h/, /w/ and /j/ are vowels because they do not obstruct the air.', a: false, why: 'هي حروف ساكنة، لأنها لا تكون قلب المقطع أبدًا ' + en('(syllabic distribution)') + '.', src: 'L2 · ص17' },
+{ id: 'q2-17', lec: 'L2', type: 'tf', topic: 'l2', q: 'Some English vowels are nasal.', a: false, why: 'يخرج هواء كل الحروف الصوتية من الفم ' + en('(oral)') + '. يحدث ذلك لأن الحنك اللين يرتفع.', src: 'L2 · ص49' },
+{ id: 'q2-18', lec: 'L2', type: 'tf', topic: 'l2', q: '/h/, /w/ and /j/ are vowels because they do not obstruct the air.', a: false, why: 'هي حروف ساكنة، لأنها لا تكون الجزء الأساسي في المقطع، أي قلبه أبدًا ' + en('(syllabic distribution)') + '.', src: 'L2 · ص17' },
 { id: 'q2-19', lec: 'L2', type: 'tf', topic: 'l2', q: '/b, d, g/ are voiced.', a: true, why: 'الأحبال الصوتية تهتز معها.', src: 'L2 · ص9' },
 { id: 'q2-20', lec: 'L2', type: 'match', topic: 'l2', q: 'Match each place with its sounds', pairs: [['Bilabial', '/p, b, m/'], ['Velar', '/k, g, ŋ/'], ['Post-alveolar', '/ʃ, ʒ/'], ['Glottal', '/ʔ, h/']], why: 'من شرائح مكان النطق.', src: 'L2 · ص24–34' },
 { id: 'q2-21', lec: 'L2', type: 'match', topic: 'l2', q: 'Match each articulator', pairs: [['alveolar ridge', 'between the top front teeth and the hard palate'], ['velum', 'soft back part of the roof of the mouth'], ['pharynx', 'funnel-shaped tube above the larynx'], ['glottis', 'opening between the vocal folds']], why: 'من الشرائح 8، 10، 11، 12.', src: 'L2' },
-{ id: 'q2-22', lec: 'L2', type: 'sort', topic: 'l2', q: 'Voiced or voiceless?', buckets: ['voiceless', 'voiced'], items: [['p', 0], ['b', 1], ['s', 0], ['z', 1], ['f', 0], ['v', 1], ['m', 1], ['h', 0]], why: 'مع ' + en('voiceless') + ' تكون الأحبال الصوتية متباعدة، ومع ' + en('voiced') + ' تهتز.', src: 'L2 · ص9، 21' },
+{ id: 'q2-22', lec: 'L2', type: 'sort', topic: 'l2', q: 'Voiced or voiceless?', buckets: ['voiceless', 'voiced'], items: [['p', 0], ['b', 1], ['s', 0], ['z', 1], ['f', 0], ['v', 1], ['m', 1], ['h', 0]], why: 'تبتعد الأحبال الصوتية عن بعضها مع ' + en('voiceless') + '. وتهتز مع ' + en('voiced') + '.', src: 'L2 · ص9، 21' },
 /* L3 */
-{ id: 'q3-1', lec: 'L3', type: 'tf', topic: 'l3', q: 'English has seven short vowels and five long vowels.', a: true, why: '7 قصيرة + 5 طويلة = 12 حرفًا ' + en('(12 pure vowels)') + '.', src: 'L3 · ص5' },
+{ id: 'q3-1', lec: 'L3', type: 'tf', topic: 'l3', q: 'English has seven short vowels and five long vowels.', a: true, why: 'المجموع: 7 قصيرة + 5 طويلة = 12 حرفًا ' + en('(12 pure vowels)') + '.', src: 'L3 · ص5' },
 { id: 'q3-2', lec: 'L3', type: 'tf', topic: 'l3', q: 'Short vowels are tense and require greater muscular tension.', a: false, why: 'القصيرة مرتخية ' + en('(lax)') + ' وجهدها أقل. والطويلة هي المشدودة ' + en('(tense)') + '.', src: 'L3 · ص4' },
-{ id: 'q3-3', lec: 'L3', type: 'tf', topic: 'l3', q: 'In a closed syllable, a vowel is longer when followed by a voiceless consonant.', a: false, why: 'العكس: يطول الحرف إذا جاء بعده حرف ساكن <b>' + en('voiced') + '</b> تهتز معه الأحبال الصوتية. مثال: ' + en('bead') + ' أطول من ' + en('beat') + '.', src: 'L3 · ص6' },
-{ id: 'q3-4', lec: 'L3', type: 'mcq', topic: 'l3', q: 'Which vowel is known as the hesitation sound?', o: ['/ə/', '/ɜː/', '/ʌ/', '/ɑː/'], a: 1, why: 'تقول الشريحة عن ' + ipa('ɜː') + ': ' + en('known as the hesitation sound') + '، يعني صوت التردّد.', src: 'L3 · ص35' },
+{ id: 'q3-3', lec: 'L3', type: 'tf', topic: 'l3', q: 'In a closed syllable, a vowel is longer when followed by a voiceless consonant.', a: false, why: 'يطول الحرف إذا جاء بعده حرف ساكن تهتز معه الأحبال الصوتية. هذا معنى <b>' + en('voiced') + '</b>. مثال: ' + en('bead') + '. الحرف فيه أطول من نظيره في كلمة ' + en('beat') + '.', src: 'L3 · ص6' },
+{ id: 'q3-4', lec: 'L3', type: 'mcq', topic: 'l3', q: 'Which vowel is known as the hesitation sound?', o: ['/ə/', '/ɜː/', '/ʌ/', '/ɑː/'], a: 1, why: 'يُستخدم عند التردّد في الكلام. تقول الشريحة عن ' + ipa('ɜː') + ': ' + en('known as the hesitation sound') + '، يعني صوت التردّد.', src: 'L3 · ص35' },
 { id: 'q3-5', lec: 'L3', type: 'mcq', topic: 'l3', q: 'A vowel whose quality doesn\'t change within the same syllable is a:', o: ['Diphthong', 'Triphthong', 'Monophthong', 'Schwa'], a: 2, why: 'الجواب ' + en('Monophthong') + '، أي حرف أحادي صوته ثابت، مثل ' + en('he') + '.', src: 'L3 · ص2' },
-{ id: 'q3-6', lec: 'L3', type: 'mcq', topic: 'l3', q: 'Which word has a longer vowel?', o: ['me', 'mean'], a: 0, why: 'مقطع ' + en('me') + ' مفتوح: آخره حرف صوتي. أما ' + en('mean') + ' فمقطعها مغلق بحرف ساكن. والحرف في المقطع المفتوح أطول.', src: 'L3 · ص6' },
-{ id: 'q3-7', lec: 'L3', type: 'tf', topic: 'l3', q: '/ʌ/ is a back vowel.', a: false, why: 'تصنّفه الدكتورة ' + en('central') + '، ووصفه: ' + en('mid-low, central, unrounded, lax') + '.', src: 'L3 · ص33' },
+{ id: 'q3-6', lec: 'L3', type: 'mcq', topic: 'l3', q: 'Which word has a longer vowel?', o: ['me', 'mean'], a: 0, why: 'تنتهي ' + en('me') + ' بحرف صوتي، فمقطعها مفتوح. وتنتهي ' + en('mean') + ' بحرف ساكن، فمقطعها مغلق. يطول الحرف أكثر في المقطع المفتوح.', src: 'L3 · ص6' },
+{ id: 'q3-7', lec: 'L3', type: 'tf', topic: 'l3', q: '/ʌ/ is a back vowel.', a: false, why: 'تصنّفه الدكتورة ' + en('central') + '. وليس من الحروف الخلفية ' + en('(back)') + '. وصفه في الشريحة: ' + en('mid-low, central, unrounded, lax') + '.', src: 'L3 · ص33' },
 { id: 'q3-8', lec: 'L3', type: 'mcq', topic: 'l3', q: 'Short and long vowels differ in quantity and in:', o: ['voicing', 'quality', 'place of articulation', 'aspiration'], a: 1, why: 'الجواب ' + en('quality') + '، أي نوع الصوت: يأتي من شكل اللسان ومكانه وتدوير الشفتين.', src: 'L3 · ص5' },
-{ id: 'q3-9', lec: 'L3', type: 'mcq', topic: 'l3', q: 'The name of the symbol /æ/ is:', o: ['the schwa', 'the caret', 'the ash', 'the hook'], a: 2, why: 'أسماء ثلاثة رموز في المحاضرة: ' + ipa('æ') + ' = ' + en('the ash') + '، ' + ipa('ʌ') + ' = ' + en('the caret') + '، ' + ipa('ə') + ' = ' + en('the schwa') + '.', src: 'L3 · ص16' },
+{ id: 'q3-9', lec: 'L3', type: 'mcq', topic: 'l3', q: 'The name of the symbol /æ/ is:', o: ['the schwa', 'the caret', 'the ash', 'the hook'], a: 2, why: 'في المحاضرة ثلاثة رموز لها أسماء. الأول ' + ipa('æ') + '. اسمه ' + en('the ash') + '. الثاني ' + ipa('ʌ') + '. اسمه ' + en('the caret') + '. الثالث ' + ipa('ə') + '. اسمه ' + en('the schwa') + '.', src: 'L3 · ص16' },
 { id: 'q3-10', lec: 'L3', type: 'tf', topic: 'l3', q: 'In South East England, "a" followed by s, f, th or n is pronounced /ɑː/.', a: true, why: 'أمثلة المحاضرة: ' + en('ask, pass, after, bath, dance') + '.', src: 'L3 · ص21' },
 { id: 'q3-11', lec: 'L3', type: 'sort', topic: 'l3', q: 'Short or long?', buckets: ['short', 'long'], items: [['ɪ', 0], ['iː', 1], ['ʊ', 0], ['uː', 1], ['ɜː', 1], ['ə', 0], ['ɒ', 0], ['ɔː', 1]], why: 'رمز الحرف الطويل فيه علامة الطول ' + ipa('ː') + '.', src: 'L3 · ص5' },
 /* L4 */
-{ id: 'q4-1', lec: 'L4', type: 'tf', topic: 'l4', q: 'In diphthongs, the second part is longer and stronger than the first.', a: false, why: 'العكس: الجزء الأول أطول وأقوى، والثاني أقصر وأهدأ.', src: 'L4 · ص5' },
+{ id: 'q4-1', lec: 'L4', type: 'tf', topic: 'l4', q: 'In diphthongs, the second part is longer and stronger than the first.', a: false, why: 'ابدئي بالجزء الأول بصوت أطول وأقوى. انطقي الجزء الثاني بصوت أقصر وأهدأ.', src: 'L4 · ص5' },
 { id: 'q4-2', lec: 'L4', type: 'tf', topic: 'l4', q: 'In terms of length, diphthongs are similar to the long vowels.', a: true, why: 'في الشريحة 5: طول الحروف المزدوجة مثل طول الحروف الطويلة.', src: 'L4 · ص5' },
-{ id: 'q4-3', lec: 'L4', type: 'tf', topic: 'tri', q: 'English triphthongs are the three centring diphthongs + /ə/.', a: false, why: 'الحروف الثلاثية هي الحروف المزدوجة الصاعدة ' + en('(closing)') + ' <b>الخمسة</b> + ' + ipa('ə') + '، وليست المتجهة للوسط.', src: 'L4 · ص20' },
-{ id: 'q4-4', lec: 'L4', type: 'tf', topic: 'rpga', q: 'GA has the centring diphthongs /ɪə/, /eə/, /ʊə/.', a: false, why: 'في الشريحة: ' + en('GA (5) only closing') + '. يعني ليس في الأمريكية حروف متجهة للوسط.', src: 'L4 · ص26' },
-{ id: 'q4-5', lec: 'L4', type: 'mcq', topic: 'rpga', q: '"hot" in RP and GA:', o: ['RP /hɒt/, GA /hɑt/', 'RP /hɑt/, GA /hɒt/', 'both /hɒt/', 'both /hɔːt/'], a: 0, why: 'الحرف ' + ipa('ɒ') + ' موجود في ' + en('RP') + ' فقط، ويقابله ' + ipa('ɑ') + ' في ' + en('GA') + '.', src: 'L4 · ص24' },
-{ id: 'q4-6', lec: 'L4', type: 'mcq', topic: 'rpga', q: 'How many diphthongs in RP and in GA?', o: ['RP 8, GA 5', 'RP 5, GA 8', 'both 8', 'RP 8, GA 3'], a: 0, why: 'في الشريحة: ' + en('RP (8) centering and closing · GA (5) only closing') + '.', src: 'L4 · ص26' },
-{ id: 'q4-7', lec: 'L4', type: 'mcq', topic: 'l4', q: 'Closing diphthongs glide from:', o: ['a closer vowel to a more open vowel', 'a more open vowel to a closer vowel', 'any vowel to /ə/', 'a front vowel to a back vowel'], a: 1, why: 'التعريف: ' + en('from a relatively more open vowel towards a relatively closer vowel') + '. يعني اللسان يصعد، والفم ينغلق قليلًا.', src: 'L4 · ص9' },
-{ id: 'q4-8', lec: 'L4', type: 'mcq', topic: 'tri', q: 'Which triphthong is in "power" and "hour"?', o: ['/aʊə/', '/əʊə/', '/aɪə/', '/ɔɪə/'], a: 0, why: 'الحرف المزدوج ' + ipa('aʊ') + '، وبعده ' + ipa('ə') + '.', src: 'L4 · ص20' },
-{ id: 'q4-9', lec: 'L4', type: 'mcq', topic: 'tri', q: 'Transcribe "lawyer":', o: ['/lɔɪə/', '/lɔːjə/', '/laɪə/', '/ləʊə/'], a: 0, why: 'من التمرين المحلول في المحاضرة: ' + en('lawyer') + ' = ' + ipa('lɔɪə') + '.', src: 'L4 · ص21' },
-{ id: 'q4-10', lec: 'L4', type: 'sort', topic: 'l4', q: 'Which group?', buckets: ['centring', 'closing → ɪ', 'closing → ʊ'], items: [['ɪə', 0], ['eɪ', 1], ['əʊ', 2], ['eə', 0], ['aɪ', 1], ['aʊ', 2], ['ʊə', 0], ['ɔɪ', 1]], why: 'آخر رمز في الحرف المزدوج يحدد مجموعته.', src: 'L4 · ص6' },
-{ id: 'q4-11', lec: 'L4', type: 'match', topic: 'l4', q: 'Match the word with its diphthong', pairs: [['buy', '/aɪ/'], ['boy', '/ɔɪ/'], ['bay', '/eɪ/'], ['bare', '/eə/']], why: 'كتبت الدكتورة على الشريحة: ' + en('buy') + ' = ' + ipa('baɪ') + '، ' + en('boy') + ' = ' + ipa('bɔɪ') + '، ' + en('bay') + ' = ' + ipa('beɪ') + '.', src: 'L4 · ص13' },
+{ id: 'q4-3', lec: 'L4', type: 'tf', topic: 'tri', q: 'English triphthongs are the three centring diphthongs + /ə/.', a: false, why: 'اختاري من الحروف المزدوجة الصاعدة الخمسة. ثم أضيفي ' + ipa('ə') + ' بعدها ليصبح الصوت ثلاثيًا. لا نستخدم المجموعة المتجهة للوسط ' + en('(centring)') + '.', src: 'L4 · ص20' },
+{ id: 'q4-4', lec: 'L4', type: 'tf', topic: 'rpga', q: 'GA has the centring diphthongs /ɪə/, /eə/, /ʊə/.', a: false, why: 'في الشريحة: ' + en('GA (5) only closing') + '. في الأمريكية خمسة حروف مزدوجة، وكلها صاعدة. ولا توجد فيها حروف المجموعة المتجهة للوسط.', src: 'L4 · ص26' },
+{ id: 'q4-5', lec: 'L4', type: 'mcq', topic: 'rpga', q: '"hot" in RP and GA:', o: ['RP /hɒt/, GA /hɑt/', 'RP /hɑt/, GA /hɒt/', 'both /hɒt/', 'both /hɔːt/'], a: 0, why: 'الصوت ' + ipa('ɒ') + ' موجود في البريطانية. اسمها في المحاضرة ' + en('RP') + '. وفي الأمريكية يقابله صوت آخر. هذا الصوت هو ' + ipa('ɑ') + '. اسم الأمريكية في المحاضرة ' + en('GA') + '.', src: 'L4 · ص24' },
+{ id: 'q4-6', lec: 'L4', type: 'mcq', topic: 'rpga', q: 'How many diphthongs in RP and in GA?', o: ['RP 8, GA 5', 'RP 5, GA 8', 'both 8', 'RP 8, GA 3'], a: 0, why: 'في البريطانية 8 حروف مزدوجة، منها صاعدة ومنها متجهة للوسط. وفي الأمريكية 5 فقط، وكلها صاعدة. في الشريحة: ' + en('RP (8) centering and closing · GA (5) only closing') + '.', src: 'L4 · ص26' },
+{ id: 'q4-7', lec: 'L4', type: 'mcq', topic: 'l4', q: 'Closing diphthongs glide from:', o: ['a closer vowel to a more open vowel', 'a more open vowel to a closer vowel', 'any vowel to /ə/', 'a front vowel to a back vowel'], a: 1, why: 'يبدأ الصوت بحرف أوسع، وينتهي بحرف أضيق. التعريف: ' + en('from a relatively more open vowel towards a relatively closer vowel') + '.', src: 'L4 · ص9' },
+{ id: 'q4-8', lec: 'L4', type: 'mcq', topic: 'tri', q: 'Which triphthong is in "power" and "hour"?', o: ['/aʊə/', '/əʊə/', '/aɪə/', '/ɔɪə/'], a: 0, why: 'ابدئي بالصوت ' + ipa('aʊ') + '. ثم أضيفي ' + ipa('ə') + '.', src: 'L4 · ص20' },
+{ id: 'q4-9', lec: 'L4', type: 'mcq', topic: 'tri', q: 'Transcribe "lawyer":', o: ['/lɔɪə/', '/lɔːjə/', '/laɪə/', '/ləʊə/'], a: 0, why: 'من التمرين المحلول في المحاضرة كلمة ' + en('lawyer') + '. نطقها هو ' + ipa('lɔɪə') + '.', src: 'L4 · ص21' },
+{ id: 'q4-10', lec: 'L4', type: 'sort', topic: 'l4', q: 'Which group?', buckets: ['centring', 'closing → ɪ', 'closing → ʊ'], items: [['ɪə', 0], ['eɪ', 1], ['əʊ', 2], ['eə', 0], ['aɪ', 1], ['aʊ', 2], ['ʊə', 0], ['ɔɪ', 1]], why: 'انظري إلى الرمز في النهاية لتعرفي مجموعة الحرف المزدوج.', src: 'L4 · ص6' },
+{ id: 'q4-11', lec: 'L4', type: 'match', topic: 'l4', q: 'Match the word with its diphthong', pairs: [['buy', '/aɪ/'], ['boy', '/ɔɪ/'], ['bay', '/eɪ/'], ['bare', '/eə/']], why: 'كتبت الدكتورة على الشريحة ثلاث كلمات. الأولى ' + en('buy') + '. نطقها ' + ipa('baɪ') + '. الثانية ' + en('boy') + '. نطقها ' + ipa('bɔɪ') + '. الثالثة ' + en('bay') + '. نطقها ' + ipa('beɪ') + '.', src: 'L4 · ص13' },
 { id: 'q4-12', lec: 'L4', type: 'match', topic: 'l4', q: 'Match the word with its diphthong', pairs: [['found', '/aʊ/'], ['phoned', '/əʊ/'], ['here', '/ɪə/'], ['hair', '/eə/']], why: 'أزواج من ' + en('Assignment 2') + ' متقاربة في النطق، فانتبهي للفرق في كل زوج.', src: 'L4 · ص8، 17' },
 { id: 'q4-13', lec: 'L4', type: 'mcq', topic: 'l4', q: 'In "hi" /haɪ/, which part is longer and stronger?', o: ['/a/', '/ɪ/', 'both equal'], a: 0, why: 'الجزء الأول ' + ipa('a') + ' أطول وأقوى من الثاني.', src: 'L4 · ص5' }
 ];
@@ -526,7 +569,7 @@ D.cards = [
   card('c1-9', 'L1', 'l1', 'Acoustic phonetics', 'how sounds are transmitted as sound waves in the air', 'كيف ينتقل الصوت في الهواء'),
   card('c1-10', 'L1', 'l1', 'Auditory phonetics', 'how sounds are perceived', 'كيف نسمع الأصوات'),
   card('c1-11', 'L1', 'l1', 'Segmental phonology', 'analyses speech into discrete segments', 'تقسيم الكلام إلى وحدات'),
-  card('c1-12', 'L1', 'l1', 'Suprasegmental phonology', 'features which extend over the segment, such as stress and intonation', 'ما يمتد فوق الوحدة: الضغط والتنغيم'),
+  card('c1-12', 'L1', 'l1', 'Suprasegmental phonology', 'features which extend over the segment, such as stress and intonation', 'صفات تشمل أكثر من صوت، مثل الضغط والتنغيم'),
   card('c1-13', 'L1', 'l1', 'Phoneme', 'the meaning-distinguishing sound unit in a language (RP: 44)', 'الفونيم'),
   card('c1-14', 'L1', 'l1', 'Allophone', 'a different realization of a phoneme according to its context', 'الألوفون'),
   card('c1-15', 'L1', 'l1', 'IPA', 'International Phonetic Alphabet: symbols for phonemic transcription', 'الأبجدية الصوتية الدولية'),

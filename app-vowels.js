@@ -149,7 +149,7 @@ var CSS = [
   '.vx-vs.speak{background:transparent;position:relative;margin-inline-start:2px}',
   '.vx-vs.speak::before{content:"";position:absolute;inset:7px;border-radius:50%;background:var(--fill)}',
   '.vx-vs.speak svg{position:relative;width:16px;height:16px}',
-  '.vx button.word{display:block;padding:0;border:0;background:none;cursor:pointer;flex:1 1 auto;max-width:100%}',
+  '.vx button.word{display:block;padding:0;border:0;background:none;cursor:pointer;flex:1 1 auto;max-width:100%;min-width:44px;min-height:44px}',
   '.vx .word b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
   '.vx .word b mark{color:var(--acc-ink)}',
   '.vx .ro-word{min-width:0;max-width:100%}',
@@ -733,7 +733,7 @@ function buildExplorer(o) {
 
   /* ----- chart ----- */
   var chart = h('div', { class: 'chart', tabindex: '0', role: 'application', 'aria-roledescription': 'مخطط',
-    'aria-label': 'مخطط الحروف الصوتية. حرّكي إصبعك عليه، أو استخدمي الأسهم.' });
+    'aria-label': 'مخطط الحروف الصوتية. حرّكي إصبعكِ عليه، أو استخدمي الأسهم.' });
   var svgEl = S('svg', { viewBox: '0 0 360 262', 'aria-hidden': 'true', focusable: 'false' });
   chartGrid(svgEl);
   var xhV = S('line', { class: 'xh' }), xhH = S('line', { class: 'xh' });
@@ -807,7 +807,6 @@ function buildExplorer(o) {
     prevFeat = fl;
     moreIn.textContent = '';
     if (v.det) moreIn.appendChild(h('p', null, 'في الشريحة: ', h('bdi', { class: 'ltrx', dir: 'ltr' }, v.det.join(' · '))));
-    if (v.mouth && v.mouth.length) moreIn.appendChild(h('p', null, 'حركة الفم: ', h('bdi', { dir: 'ltr' }, v.mouth.join(' · '))));
     if (v.name || v.note) moreIn.appendChild(h('p', null, 'ملاحظة: ', h('bdi', { dir: 'ltr' }, [v.name, v.note].filter(Boolean).join(' · '))));
     if (v.page) moreIn.appendChild(App.pgEl('L3', v.page));
     first = false;
@@ -976,7 +975,7 @@ function buildGlide(o) {
     exam, more);
 
   /* ----- chart ----- */
-  var chart = h('div', { class: 'chart vx-glchart', role: 'img', 'aria-label': 'مخطط حركة اللسان في ' + (group === 'tri' ? 'الحروف الثلاثية' : 'الحروف المزدوجة') });
+  var chart = h('div', { class: 'chart vx-glchart', role: 'img', 'aria-label': 'مخطط ' + (group === 'tri' ? 'الحروف الثلاثية' : 'الحروف المزدوجة') });
   var svgEl = S('svg', { viewBox: '0 0 360 262', 'aria-hidden': 'true', focusable: 'false' });
   chartGrid(svgEl);
   /* reference targets: ə for centring and triphthongs, ɪ and ʊ for closing */
@@ -1019,7 +1018,7 @@ function buildGlide(o) {
   exHead.appendChild(h('b', { richText: grpTitle }));
   exHead.appendChild(replay);
   root.appendChild(readout);
-  root.appendChild(h('section', { class: 'card chart-card', 'aria-label': 'مخطط حركة اللسان' }, chart, h('div', { class: 'explore' }, exHead, exRow)));
+  root.appendChild(h('section', { class: 'card chart-card', 'aria-label': 'مخطط الحروف' }, chart, h('div', { class: 'explore' }, exHead, exRow)));
 
   function setHead(it, p) {
     var at = pointAt(it.cut, it.L * p), ang = at.ang;
@@ -1106,6 +1105,7 @@ function buildGlide(o) {
     svgEl.appendChild(it.grp);   /* bring the chosen arrow to the front */
     renderReadout();
     if (animate) play(it); else mouth.toState(stateAt(it, 0), true);
+    if (typeof o.onSelect === 'function') o.onSelect(it);
   }
   chart.addEventListener('click', function (e) {
     var r = chart.getBoundingClientRect();
@@ -1173,7 +1173,7 @@ function buildMini(arg) {
       arr.style.display = arrH.style.display = '';
     } else { arr.style.display = arrH.style.display = 'none'; }
     /* generic on purpose: words like «خلفي» would give the answer away */
-    var lbl = (a && a.label) || ('مكان الحرف على مخطط الحروف' + (pts.length > 1 ? '، والسهم حركة اللسان' : ''));
+    var lbl = (a && a.label) || 'النقطة تبيّن موضع الحرف على المخطط.';
     root.setAttribute('aria-label', lbl);
   }
   set(o);

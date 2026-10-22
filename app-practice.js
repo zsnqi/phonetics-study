@@ -13,6 +13,7 @@ var h = App.h;
    1. Styles (only what index.html does not already have; tokens only)
    ===================================================================== */
 var CSS = [
+  '.pr-hint-open .pr-kb{display:none}.pr-hint-open .hint{margin-bottom:16px}.pr-hint-open .hint .btn{margin-top:12px}',
   '.pr-qs{display:flex;flex-direction:column;',
   '  min-height:calc(100vh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom));',
   '  min-height:calc(100dvh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom));',
@@ -27,10 +28,11 @@ var CSS = [
   '.pr-word{margin-top:14px;direction:ltr;text-align:center;font-size:34px;font-weight:600;letter-spacing:-.01em;line-height:1.2}',
   '.pr-symbig{margin-top:12px;direction:ltr;text-align:center;font-size:44px;font-weight:500;line-height:1.2}',
   '.pr-descbox{margin-top:14px;padding:14px 16px;border-radius:14px;background:var(--raised);text-align:center}',
-  '.pr-frame.q-big{font-size:28px;color:var(--label2);padding:8px 0 2px}',
-  '.pr-frame .gap{min-width:64px;min-height:1.25em;padding:0 6px;border-radius:8px 8px 0 0;vertical-align:bottom;transition:background .2s,color .2s,border-color .2s}',
-  '.pr-frame .gap.right{color:var(--ok);border-bottom-color:var(--ok);background:var(--ok-bg)}',
-  '.pr-frame .gap.wrong{color:var(--bad);border-bottom-color:var(--bad);background:var(--bad-bg)}',
+  '.pr-guide{display:block;min-height:44px;margin-top:4px;font-size:14px;color:var(--acc-ink)}',
+  '.pr-prompt-word{display:flex;justify-content:center;align-items:center;gap:12px}',
+  '.pr-prompt-word .pr-word{margin-top:14px;margin-bottom:14px}',
+  '.pr-diff{direction:ltr;unicode-bidi:isolate;font-size:26px;overflow-wrap:anywhere}',
+  '.pr-diff mark{color:var(--label);background:var(--acc-wash);text-decoration:underline;text-underline-offset:4px;border-radius:3px}',
   '.pr-caret{display:inline-block;width:2px;height:.95em;margin:0 1px;vertical-align:-.1em;background:var(--acc);animation:blink 1s steps(1) infinite}',
   '.answer-box .pr-typed{white-space:pre}',
   '.pr-opts2{grid-template-columns:1fr 1fr}',
@@ -105,8 +107,8 @@ var ROUND = 15;
 var SPEC = { short: 1, long: 1, centring: 1, 'closing-i': 1, 'closing-u': 1, tri: 1, rpga: 1 };
 var FILTERS = [
   { k: 'desc', ar: 'من الوصف للرمز', types: ['desc'] },
-  { k: 'word', ar: 'من الكلمة للحرف', types: ['word'] },
-  { k: 'trans', ar: 'نطق الكلمة كاملة', types: ['trans'] },
+  { k: 'word', ar: 'نطق كلمة · أحادي', types: ['word'] },
+  { k: 'trans', ar: 'نطق كلمة · مزدوج وثلاثي', types: ['trans'] },
   { k: 'choice', ar: 'اختيار', types: ['mcq', 'sym', 'dword'] },
   { k: 'tf', ar: 'صح أو خطأ', types: ['tf'] },
   { k: 'match', ar: 'مطابقة وتصنيف', types: ['match', 'sort'] }
@@ -114,14 +116,14 @@ var FILTERS = [
 var FK = {};
 FILTERS.forEach(function (f) { f.types.forEach(function (t) { FK[t] = f.k; }); });
 var KIND_AR = {
-  desc: 'من الوصف للرمز', word: 'من الكلمة للحرف', trans: 'نطق الكلمة كاملة',
+  desc: 'من الوصف للرمز', word: 'نطق الكلمة كاملًا', trans: 'نطق الكلمة كاملًا',
   sym: 'وصف الحرف', dword: 'الحرف المزدوج', mcq: 'اختيار', tf: 'صح أو خطأ', match: 'مطابقة', sort: 'تصنيف'
 };
 var TYPE_ORDER = ['desc', 'word', 'trans', 'sym', 'dword', 'mcq', 'tf', 'match', 'sort'];
 var INSTR = {
   desc: ['اكتبي رمز الحرف حسب الوصف', 'Provide the correct sound according to the description'],
-  word: ['اكتبي رمز الحرف الصوتي', 'Write the symbol of the vowel'],
-  trans: ['اكتبي نطق الكلمة كاملة', 'Transcribe the whole word'],
+  word: ['اكتبي نطق الكلمة كاملًا', 'Write the full transcription'],
+  trans: ['اكتبي نطق الكلمة كاملًا', 'Write the full transcription'],
   sym: ['اختاري الوصف الصحيح للحرف', 'Choose the correct description'],
   dword: ['اختاري الحرف المزدوج في الكلمة', 'Which diphthong is in this word?']
 };
@@ -131,7 +133,7 @@ var BUCKET_AR = {
 };
 var MOCK_PARTS = [
   { type: 'desc', n: 6, ar: 'من الوصف للرمز', short: 'الوصف' },
-  { type: 'word', n: 8, ar: 'من الكلمة للحرف', short: 'الكلمة' },
+  { type: 'word', n: 8, ar: 'نطق كلمات بحروف أحادية', short: 'الكلمة' },
   { type: 'trans', n: 6, ar: 'نطق الكلمة كاملة', short: 'النطق' }
 ];
 var A2 = D.assignment || {};
@@ -161,12 +163,6 @@ function marked(e) {
   var out = [], re = /\[([^\]]*)\]/g, m;
   while ((m = re.exec(String(e.sp || '')))) out.push(m[1]);
   return out.join('-');
-}
-/* «الحرف المكتوب a في ban يُنطق /æ/» or the plural form for two or more letters */
-function lettersSay(e, sym) {
-  var l = marked(e);
-  var many = l.replace(/-/g, '').length > 1;
-  return (many ? 'الحروف المكتوبة ' : 'الحرف المكتوب ') + App.en(l) + ' في ' + App.en(e.w) + (many ? ' تُنطق ' : ' يُنطق ') + App.ipa(sym);
 }
 function a2Words() { return A2W.concat(A2T); }
 /* an example word for a sound, preferring one with a recorded clip */
@@ -203,15 +199,15 @@ function buildBank() {
     if (e.ex) return;
     var k = slug(e.w), v = VOW[e.v], d = DIPH[e.v], t = TRI[e.v];
     if (v) {
-      var qw = { id: 'g-word-' + k, type: 'word', lec: e.lec || 'L3', topics: [v.len], kind: 'kb', kb: 'v', answer: v.s, e: e, v: v, hint: v.s, a2: A2W.indexOf(k) > -1 };
+      var qw = { id: 'g-word-' + k, type: 'word', lec: e.lec || 'L3', topics: [v.len], kind: 'kb', kb: 'full', answer: App.normIPA(e.t), e: e, v: v, hint: v.s, a2: A2W.indexOf(k) > -1 };
       add(qw);
       (WORDS_BY_V[v.s] = WORDS_BY_V[v.s] || []).push(qw);
     } else if (d) {
-      var qt = { id: 'g-trans-' + k, type: 'trans', lec: e.lec || 'L4', topics: [d.g], kind: 'kb', kb: 'full', answer: e.t, e: e, d: d, hint: d.s, a2: A2T.indexOf(k) > -1 };
+      var qt = { id: 'g-trans-' + k, type: 'trans', lec: e.lec || 'L4', topics: [d.g], kind: 'kb', kb: 'full', answer: App.normIPA(e.t), e: e, d: d, hint: d.s, a2: A2T.indexOf(k) > -1 };
       add(qt);
       (TRANS_BY_D[d.s] = TRANS_BY_D[d.s] || []).push(qt);
     } else if (t) {
-      add({ id: 'g-trans-' + k, type: 'trans', lec: e.lec || 'L4', topics: ['tri'], kind: 'kb', kb: 'full', answer: e.t, e: e, tri: t, hint: t.base, a2: false });
+      add({ id: 'g-trans-' + k, type: 'trans', lec: e.lec || 'L4', topics: ['tri'], kind: 'kb', kb: 'full', answer: App.normIPA(e.t), e: e, tri: t, hint: t.base, a2: false });
     }
   });
   (D.vowels || []).forEach(function (v) {
@@ -284,14 +280,24 @@ function makeList(pool, n, prev) {
     if (last && o.length > 1 && o[0].id === last.id) o.push(o.shift());
     out = out.concat(o);
   }
-  return out.slice(0, n);
+  return gradual(out.slice(0, n));
+}
+
+/* Keep the selected topics and status priority; order the transcription slots by
+   sounds, not written characters (tʃ, dʒ, long vowels and glides count once). */
+function gradual(list) {
+  var full = list.filter(function (q) { return q.kb === 'full'; }).map(function (q, i) {
+    return { q: q, n: sounds(q.answer).length, i: i };
+  }).sort(function (a, b) { return a.n - b.n || a.i - b.i; });
+  var at = 0;
+  return list.map(function (q) { return q.kb === 'full' ? full[at++].q : q; });
 }
 
 /* short one-line form of a question (lists, review rows) */
 function shortPrompt(q) {
   if (q.type === 'desc') return App.descLine(q.v) + '.';
   if (q.type === 'sym') return '/' + q.v.s + '/';
-  if (q.type === 'word') return q.e.w + ' (' + App.lexFrame(q.e) + ')';
+  if (q.type === 'word') return q.e.w;
   if (q.type === 'trans' || q.type === 'dword') return q.e.w;
   return q.x ? q.x.q : q.id;
 }
@@ -324,21 +330,27 @@ function hintTools(q, card) {
   if (!q.hint) return null;
   var name = hintName();
   if (!name) return null;
-  var box = null;
+  var box = null, screen = null;
   var label = h('span', null, 'تلميح');
   var btn = h('button', { class: 'text-btn', type: 'button', 'aria-expanded': 'false' }, App.icon('compass'), label);
   var tools = h('div', { class: 'q-tools' }, btn);
   btn.addEventListener('click', function () {
     if (box) {
+      if (screen) screen.classList.remove('pr-hint-open');
       box.remove(); box = null;
       label.textContent = 'تلميح'; btn.setAttribute('aria-expanded', 'false');
+      card.scrollIntoView({ block: 'start', behavior: 'auto' });
       return;
     }
     var mono = !!VOW[q.hint];
     box = h('div', { class: 'hint' },
-      h('p', null, mono ? 'مكان الحرف على المخطط.' : 'حركة الحرف المزدوج على المخطط.'),
-      App.widget(name, { sym: q.hint }));
+      h('p', null, mono ? 'النقطة تبيّن موضع الحرف على المخطط.' : 'السهم يبيّن من أين يبدأ الصوت وأين ينتهي.'),
+      App.widget(name, { sym: q.hint }),
+      h('button', { type: 'button', class: 'btn btn-soft', onclick: function () { btn.click(); } }, 'ارجعي للإجابة'));
     card.appendChild(box);
+    screen = card.closest('.screen');
+    if (screen) screen.classList.add('pr-hint-open');
+    box.scrollIntoView({ block: 'center', behavior: 'auto' });
     label.textContent = 'أخفي التلميح'; btn.setAttribute('aria-expanded', 'true');
   });
   card.appendChild(tools);
@@ -349,8 +361,7 @@ function hintTools(q, card) {
    6. IPA keyboard (no input element, so the phone keyboard never opens)
    ===================================================================== */
 var KB_V = ['i', 'ɪ', 'e', 'æ', 'a', 'ɑ', 'ɒ', 'ɔ', 'ʊ', 'u', 'ʌ', 'ɜ', 'ə', 'ː'];
-var KB_C = ['p', 'b', 't', 'd', 'k', 'g', 'h', 'f', 'v', 'θ', 'ð', 's', 'z', 'ʃ', 'ʒ', 'm', 'n', 'l', 'r', 'w', 'j'];
-var KB_EXTRA = ['ŋ'];
+var KB_C = ['p', 'b', 't', 'd', 'k', 'g', 'h', 'f', 'v', 'θ', 'ð', 's', 'z', 'ʃ', 'ʒ', 'm', 'n', 'l', 'r', 'w', 'j', 'ŋ', 'tʃ', 'dʒ'];
 function keyboard(full, api) {
   var grid = h('div', { class: 'kb-grid' });
   function key(ch, cls) {
@@ -359,10 +370,9 @@ function keyboard(full, api) {
   KB_V.forEach(function (ch) { grid.appendChild(key(ch, 'v')); });
   if (full) {
     KB_C.forEach(function (ch) { grid.appendChild(key(ch)); });
-    KB_EXTRA.forEach(function (ch) { grid.appendChild(key(ch)); });
   }
   var del = h('button', { class: 'key wide s2', type: 'button', 'aria-label': 'امسحي آخر رمز', onclick: function () { api.del(); } }, '⌫');
-  var go = h('button', { class: 'key wide go ' + (full ? 's4' : 's5'), type: 'button', dir: 'rtl', disabled: true, onclick: function () { api.check(); } }, 'تحقّقي');
+  var go = h('button', { class: 'key wide go ' + (full ? 's2' : 's5'), type: 'button', dir: 'rtl', disabled: true, onclick: function () { api.check(); } }, 'تحقّقي');
   grid.appendChild(del);
   grid.appendChild(go);
   return {
@@ -383,6 +393,9 @@ function promptNode(q) {
   }
   if (q.type === 'desc') box.appendChild(h('p', { class: 'q-desc pr-descbox', dir: 'ltr', lang: 'en' }, App.descLine(q.v) + '.'));
   else if (q.type === 'sym') box.appendChild(h('p', { class: 'pr-symbig', dir: 'ltr' }, '/' + q.v.s + '/'));
+  else if (q.e && q.kb === 'full') box.appendChild(h('div', { class: 'pr-prompt-word' },
+    h('p', { class: 'pr-word', dir: 'ltr', lang: 'en' }, q.e.w),
+    App.speakButton({ word: q.e.w, label: 'اسمعي الكلمة' })));
   else if (q.e) box.appendChild(h('p', { class: 'pr-word', dir: 'ltr', lang: 'en' }, q.e.w));
   else if (q.x) {
     box.appendChild(h('p', { class: 'q-text ltr', dir: 'ltr', lang: 'en' }, q.x.q));
@@ -394,17 +407,6 @@ function promptNode(q) {
 
 function caretEl() { return h('i', { class: 'pr-caret', 'aria-hidden': 'true' }); }
 function makeDisplay(q) {
-  if (q.type === 'word') {
-    var gap = h('span', { class: 'gap' });
-    var pre = App.normIPA(q.e.pre), post = App.normIPA(q.e.post);
-    var frame = h('p', { class: 'q-big pr-frame', dir: 'ltr', 'aria-live': 'polite' },
-      pre ? h('span', null, pre) : null, gap, post ? h('span', null, post) : null);
-    return {
-      el: frame,
-      set: function (t) { gap.textContent = t; gap.appendChild(caretEl()); },
-      done: function (ok) { var c = gap.querySelector('.pr-caret'); if (c) c.remove(); gap.classList.add(ok ? 'right' : 'wrong'); }
-    };
-  }
   var typed = h('span', { class: 'pr-typed' });
   var caret = caretEl();
   var box = h('div', { class: 'answer-box', dir: 'ltr', 'aria-live': 'polite' },
@@ -422,9 +424,9 @@ function kbView(q, ctx) {
   var disp = makeDisplay(q);
   var kb = keyboard(full, { put: put, del: del, check: check });
   var allowed = {};
-  KB_V.concat(full ? KB_C.concat(KB_EXTRA) : []).forEach(function (c) { allowed[c] = 1; });
+  KB_V.concat(full ? KB_C : []).forEach(function (c) { allowed[c] = 1; });
   function draw() { disp.set(buf.join('')); kb.ready(buf.length > 0); }
-  function put(ch) { if (ctx.answered || buf.length >= 16) return; buf.push(ch); draw(); }
+  function put(ch) { if (ctx.answered || buf.join('').length >= 32) return; buf.push(ch); draw(); }
   function del() { if (ctx.answered) return; buf.pop(); draw(); }
   function check() {
     if (ctx.answered || !buf.length) return;
@@ -441,7 +443,7 @@ function kbView(q, ctx) {
       if (e.key === 'Backspace') { del(); return true; }
       if (e.key === 'Enter') { check(); return true; }
       var k = e.key === ':' ? 'ː' : (e.key === 'ɡ' ? 'g' : e.key);
-      if (k && allowed[k]) { put(k); return true; }
+      if (k && (allowed[k] || (full && /^[a-z]$/.test(k)))) { put(k); return true; }
       return false;
     }
   };
@@ -634,8 +636,9 @@ function featGrid(v, other) {
 function lenNote(given, ans) {
   var g = App.normIPA(given), a = App.normIPA(ans);
   if (g === a || g.replace(/ː/g, '') !== a.replace(/ː/g, '')) return null;
-  if (a.split('ː').length > g.split('ː').length) return 'الحرف هنا طويل (tense)، فيحتاج علامة الطول ' + App.ipa('ː') + '.';
-  return 'الحرف هنا قصير (lax)، فلا يحتاج علامة الطول ' + App.ipa('ː') + '.';
+  if (a.split('ː').length === g.split('ː').length) return 'انقلي علامة الطول /ː/ إلى ما بعد الحرف الصوتي الطويل.';
+  if (a.split('ː').length > g.split('ː').length) return 'أضيفي علامة الطول ' + App.ipa('ː') + '. الحرف هنا طويل (tense).';
+  return 'احذفي علامة الطول ' + App.ipa('ː') + '. الحرف هنا قصير (lax).';
 }
 function exDesc(fb, q, ok, given) {
   var v = q.v, gv = ok ? null : VOW[App.normIPA(given)] || null;
@@ -644,9 +647,9 @@ function exDesc(fb, q, ok, given) {
   if (!ok) {
     var ln = lenNote(given, v.s);
     if (ln) fb.appendChild(why(ln));
-    else if (gv && gv !== v) { fb.appendChild(why('كتبتِ ' + App.ipa(gv.s) + '، ووصفه:')); fb.appendChild(h('p', { class: 'exam-line', dir: 'ltr', lang: 'en' }, App.descLine(gv))); fb.appendChild(why('والفرق في الخانات الملوّنة.')); }
+    else if (gv && gv !== v) { fb.appendChild(why('كتبتِ ' + App.ipa(gv.s) + '، وهذا وصفه:')); fb.appendChild(h('p', { class: 'exam-line', dir: 'ltr', lang: 'en' }, App.descLine(gv))); fb.appendChild(why('قارني الخانات الملوّنة لتري الفرق.')); }
   }
-  if (v.name) fb.appendChild(why('الرمز ' + App.ipa(v.s) + ' اسمه ' + App.en(v.name) + ' في المحاضرة.', 'pr-note'));
+  if (v.name) fb.appendChild(rowNode(['الرمز', { ipa: v.s }, 'اسمه', { en: v.name }]));
   fb.appendChild(srcP(App.pgEl('L3', v.page)));
 }
 function exSym(fb, q, ok, given, extra) {
@@ -658,59 +661,159 @@ function exSym(fb, q, ok, given, extra) {
   fb.appendChild(srcP(App.pgEl('L3', v.page)));
 }
 function exWord(fb, q, ok, given) {
-  var e = q.e, v = q.v, gv = ok ? null : VOW[App.normIPA(given)] || null;
-  fb.appendChild(h('div', { class: 'pr-ansrow' }, ipaBig(v.s), App.wordChip(e.w), vowelSpeak(v.s)));
-  fb.appendChild(why(lettersSay(e, v.s) + '، ووصفه:')); fb.appendChild(h('p', { class: 'exam-line', dir: 'ltr', lang: 'en' }, App.descLine(v)));
-  if (!ok) {
-    var ln = lenNote(given, v.s);
-    var ex = gv && gv !== v ? exampleWord(gv.s) : null;
-    if (ln) fb.appendChild(why(ln));
-    else if (gv && gv !== v) fb.appendChild(why('كتبتِ ' + App.ipa(gv.s) + (ex ? '، وهو الحرف في ' + App.en(ex) : '') + '.'));
-  }
-  if (e.note) fb.appendChild(why(e.note, 'pr-note'));
-  fb.appendChild(srcP(App.pgEl('L3', v.page)));
+  fullFeedback(fb, q, ok, given);
+  fb.appendChild(srcP(App.pgEl('L3', q.v.page)));
 }
-function diphLine(q) {
-  var e = q.e;
-  if (q.tri) return lettersSay(e, q.tri.s) + ': الحرف المزدوج ' + App.ipa(q.tri.base) + ' وبعده ' + App.ipa('ə') + '.';
+/* parts: strings = Arabic words, {ipa:'x'} = IPA chip, {en:'w'} = English word, Node = as is */
+function rowNode(parts) {
+  return h('div', { class: 'pr-ansrow' }, parts.map(function (p) {
+    if (typeof p === 'string') return h('span', null, p);
+    if (p && p.ipa != null) return App.ipaEl(p.ipa);
+    if (p && p.en != null) return App.enEl ? App.enEl(p.en) : h('bdi', { class: 't-en', dir: 'ltr' }, p.en);
+    return p;
+  }));
+}
+function diphNode(q, noWord) {
+  var e = q.e, box = h('div', { class: 'pr-diph' });
+  box.appendChild(App.clueRow({ clue: marked(e), sym: q.tri ? q.tri.s : q.d.s, word: noWord ? null : e.w }));
+  if (q.tri) {
+    box.appendChild(rowNode(['يبدأ', { ipa: q.tri.base }, 'ثم', { ipa: 'ə' }]));
+    return box;
+  }
   var g = (D.groups || {})[q.d.g] || {};
-  var kind = q.d.g === 'centring' ? 'متجه للوسط (centring)' : 'صاعد (closing)';
-  return lettersSay(e, q.d.s) + '، وهو حرف مزدوج ' + kind + '، آخره ' + App.ipa(g.end || q.d.s.slice(-1)) + '.';
+  var kind = q.d.g === 'centring' ? 'centring' : 'closing';
+  box.appendChild(rowNode(['يبدأ', { ipa: q.d.s.slice(0, -1) }, 'وينتهي', { ipa: g.end || q.d.s.slice(-1) }]));
+  box.appendChild(why('اسم هذه المجموعة ' + App.en(kind) + '.'));
+  return box;
 }
 function diphPage(q) { return q.tri ? App.pgEl('L4', 20) : App.pgEl('L4', q.d.page); }
 function exTrans(fb, q, ok, given) {
-  var e = q.e, ans = App.normIPA(q.answer), g = App.normIPA(given || '');
-  var target = q.tri ? q.tri.s : q.d.s;
-  fb.appendChild(h('div', { class: 'pr-ansrow' }, ipaBig(ans), App.speakButton({ word: e.w, label: 'اسمعي الكلمة' })));
-  fb.appendChild(why(diphLine(q)));
-  if (!ok) {
-    var notes = [];
-    if (/ː/.test(g) && !/ː/.test(ans)) notes.push('الحروف المزدوجة لا تُكتب معها علامة الطول ' + App.ipa('ː') + '.');
-    if (/r/.test(g) && !/r/.test(ans) && /r/.test(e.w)) notes.push('الحرف المكتوب ' + App.en('r') + ' هنا لا يُنطق في لهجة ' + App.en('RP') + '.');
-    if (g.indexOf(target) > -1) notes.push('الحرف المزدوج صحيح، راجعي باقي الأصوات في الكلمة.');
-    else {
-      var other = Object.keys(DIPH).filter(function (s) { return s !== target && g.indexOf(s) > -1; })[0];
-      if (other) notes.push('كتبتِ ' + App.ipa(other) + ' بدل ' + App.ipa(target) + '.');
-    }
-    notes.slice(0, 2).forEach(function (n) { fb.appendChild(why(n)); });
-  }
-  if (e.note) fb.appendChild(why(e.note, 'pr-note'));
+  fullFeedback(fb, q, ok, given);
+  if (ok) fb.appendChild(diphNode(q));
   fb.appendChild(srcP(diphPage(q)));
+}
+
+function sounds(text) {
+  var str = App.normIPA(text), out = [];
+  var symbols = Object.keys(TRI).concat(Object.keys(DIPH), Object.keys(VOW), ['tʃ', 'dʒ']);
+  symbols.sort(function (a, b) { return b.length - a.length; });
+  while (str) {
+    var sym = symbols.filter(function (s) { return str.indexOf(s) === 0; })[0] || str.charAt(0);
+    out.push(sym); str = str.slice(sym.length);
+  }
+  return out;
+}
+/* Minimum edits align the whole answer, including insertions and deletions. */
+function differences(g, a) {
+  var dp = [], i, j, ops = [], gm = [], am = [];
+  for (i = 0; i <= g.length; i++) {
+    dp[i] = [i];
+    for (j = 1; j <= a.length; j++) dp[i][j] = i === 0 ? j : Math.min(
+      dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (g[i - 1] === a[j - 1] ? 0 : 1));
+  }
+  i = g.length; j = a.length;
+  while (i || j) {
+    if (i && j && dp[i][j] === dp[i - 1][j - 1] + (g[i - 1] === a[j - 1] ? 0 : 1)) {
+      var changed = g[i - 1] !== a[j - 1];
+      if (changed) { gm[i - 1] = true; am[j - 1] = true; }
+      ops.push({ from: g[--i], to: a[--j], changed: changed });
+    } else if (i && dp[i][j] === dp[i - 1][j] + 1) {
+      gm[i - 1] = true; ops.push({ from: g[--i], to: '', changed: true });
+    } else { am[j - 1] = true; ops.push({ from: '', to: a[--j], changed: true }); }
+  }
+  var changes = [], run = null;
+  ops.reverse().forEach(function (op) {
+    if (!op.changed) { run = null; return; }
+    if (!run) { run = { from: '', to: '' }; changes.push(run); }
+    run.from += op.from; run.to += op.to;
+  });
+  return { changes: changes, given: gm, answer: am };
+}
+function changedPart(q, given) {
+  var changes = differences(sounds(given), sounds(q.answer)).changes;
+  return changes.length === 1 ? changes[0] : null;
+}
+function vowelChange(d) {
+  return d && /^[ɪeæɑɒɔʊuʌɜəiaː]+$/.test(d.from) && /^[ɪeæɑɒɔʊuʌɜəiaː]+$/.test(d.to) &&
+    d.from.replace(/ː/g, '') !== d.to.replace(/ː/g, '');
+}
+var R_NOTE = 'في اللهجة البريطانية لا يُنطق الحرف r هنا، فلا تكتبيه في النطق.';
+function smartNotes(q, given) {
+  var g = App.normIPA(given), a = App.normIPA(q.answer), w = q.e.w.toLowerCase(), notes = [];
+  var diff = differences(sounds(g), sounds(a));
+  var gc = (g.match(/ː/g) || []).length, ac = (a.match(/ː/g) || []).length;
+  if (g !== a && g.replace(/ː/g, '') === a.replace(/ː/g, '')) notes.push(gc < ac
+    ? 'أضيفي علامة الطول /ː/ بعد الحرف الطويل.'
+    : gc > ac ? 'احذفي علامة الطول /ː/ من هذا الموضع.'
+      : 'انقلي علامة الطول /ː/ إلى ما بعد الحرف الصوتي الطويل.');
+  if (g.indexOf('y') >= 0 && g.replace(/y/g, 'j') === a) notes.push({ row: ['كتبتِ', { en: 'y' }, 'والصحيح', { ipa: 'j' }] });
+  if (/[aeiouy]r/.test(w) && /[ɪeæɑɒɔʊuʌɜəiaː]r/.test(g) && g.replace(/([ɪeæɑɒɔʊuʌɜəiaː])r/, '$1') === a) notes.push(R_NOTE);
+  var double = /([pbtdkgfvszmnlrwh])\1/.exec(w);
+  if (double && g.indexOf(double[0]) >= 0 && g.replace(double[0], double[1]) === a) notes.push('اكتبي صوت الحرف مرة واحدة، حتى لو تكرر في الكتابة: /' + double[1] + '/.');
+  var silent = [
+    [/^kn/, 'k', /^k/], [/^wr/, 'w', /^w/], [/e$/, 'e', /e$/],
+    [/l/, 'l', /l/], [/mb$/, 'b', /b$/], [/^h/, 'h', /^h/], [/n$/, 'n', /n$/]
+  ];
+  silent.some(function (s) {
+    if (s[0].test(w) && (s[1] === 'e' ? /[^aeiou]e$/.test(w) : s[1] === 'b' ? /mb$/.test(w) : a.indexOf(s[1]) < 0) && s[2].test(g) && g.replace(s[2], '') === a) {
+      notes.push('الحرف المكتوب ' + s[1] + ' لا تسمعينه في هذه الكلمة. لا تكتبيه في النطق.'); return true;
+    }
+    return false;
+  });
+  /* Diagnose an unambiguous single c; ch/ck/sc and multiple c's need context. */
+  var cWord = w.replace(/ch|ck|sc/g, '');
+  var c = (cWord.match(/c/g) || []).length === 1 ? (/c[eiy]/.test(cWord) ? 's' : 'k') : null;
+  var ci = /^c(?!h)/.test(w) ? 0 : /ce?$/.test(w) ? a.length - 1 : -1;
+  if (c && ci >= 0 && a.charAt(ci) === c && g.length === a.length &&
+      (g.charAt(ci) === 'c' || g.charAt(ci) === (c === 's' ? 'k' : 's')) &&
+      g.slice(0, ci) + c + g.slice(ci + 1) === a) {
+    notes.push({ row: ['الحرف', { en: 'c' }, 'هنا يُنطق', { ipa: c }] });
+  }
+  if (/x/.test(w) && /ks/.test(a) && (g.replace(/x/, 'ks') === a || g.replace(/gz/, 'ks') === a)) notes.push({ row: ['الحرف', { en: 'x' }, 'يُكتب', { ipa: 'ks' }] });
+  if (/ph/.test(w) && /f/.test(a) && (g.replace(/ph/, 'f') === a || g.replace(/p/, 'f') === a)) notes.push({ row: ['الحرفان', { en: 'ph' }, 'يُكتبان', { ipa: 'f' }] });
+  var d = diff.changes.length === 1 ? diff.changes[0] : null;
+  if (d && d.from === 'θ' && d.to === 'ð') { notes.push({ row: ['كتبتِ', { ipa: 'θ' }, 'بدل', { ipa: 'ð' }] }); notes.push('الصوت الصحيح تهتز معه الأحبال الصوتية (voiced).'); }
+  if (d && d.from === 'ð' && d.to === 'θ') { notes.push({ row: ['كتبتِ', { ipa: 'ð' }, 'بدل', { ipa: 'θ' }] }); notes.push('الصوت الصحيح لا تهتز معه الأحبال الصوتية (voiceless).'); }
+  if (vowelChange(d)) notes.push({ row: ['كتبتِ', { ipa: d.from }, 'بدل', { ipa: d.to }] });
+  return notes;
+}
+function diffLine(tokens, marks) {
+  return h('bdi', { class: 'pr-diff', dir: 'ltr' }, '/', tokens.map(function (s, i) {
+    return h(marks[i] ? 'mark' : 'span', null, s);
+  }), '/');
+}
+function fullFeedback(fb, q, ok, given) {
+  var ans = App.normIPA(q.answer), g = App.normIPA(given || '');
+  fb.appendChild(h('div', { class: 'pr-ansrow' }, ipaBig(ans), App.speakButton({ word: q.e.w, label: 'اسمعي الكلمة' })));
+  if (!ok) {
+    var notes = smartNotes(q, g), gs = Array.from(g), as = Array.from(ans), diff = differences(gs, as);
+    notes.forEach(function (n) {
+      if (typeof n !== 'string') { fb.appendChild(rowNode(n.row)); return; }
+      fb.appendChild(why(App.esc(n)));
+      if (n === R_NOTE && App.showRSheet) fb.appendChild(App.refChip('الحرف r', function () { App.showRSheet(); }));
+    });
+    if (notes.length) fb.appendChild(why('قارني الجزء الذي تحته خط:'));
+    fb.appendChild(h('p', { class: 'pr-ansrow' }, h('span', null, 'كتبتِ'), diffLine(gs, diff.given)));
+    fb.appendChild(h('p', { class: 'pr-ansrow' }, h('span', null, 'الصحيح'), diffLine(as, diff.answer)));
+    var part = changedPart(q, g);
+    if (vowelChange(part) && q.d && part.to === q.d.s) fb.appendChild(diphNode(q));
+  }
+  if (ok && q.e.note) fb.appendChild(why(q.e.note, 'pr-note'));
 }
 function exDword(fb, q, ok, given, extra) {
   var e = q.e, pick = !ok && extra && extra.pick ? extra.pick : null;
   fb.appendChild(h('div', { class: 'pr-ansrow' }, ipaBig(q.d.s), App.wordChip(e.w), vowelSpeak(q.d.s)));
-  fb.appendChild(why(diphLine(q)));
+  fb.appendChild(diphNode(q, true));
   if (pick) {
     var ex = exampleWord(pick.s);
-    fb.appendChild(why('اخترتِ ' + App.ipa(pick.s) + (ex && ex !== e.w ? '، وهو الحرف في ' + App.en(ex) : '') + '.'));
+    fb.appendChild(rowNode(['اخترتِ', { ipa: pick.s }, ex && ex !== e.w ? App.wordChip(ex) : null].filter(Boolean)));
   }
   if (e.note) fb.appendChild(why(e.note, 'pr-note'));
   fb.appendChild(srcP(diphPage(q)));
 }
 function exAuthored(fb, q, ok, given, extra) {
   var x = q.x;
-  if (q.type === 'tf' && !ok) fb.appendChild(h('p', { class: 'fb-ans' }, x.a ? 'العبارة صحيحة.' : 'العبارة خاطئة.'));
+  if (q.type === 'tf' && !ok) fb.appendChild(h('p', { class: 'fb-ans' }, x.a ? 'العبارة صحيحة.' : 'العبارة غير صحيحة.'));
   if (!ok && extra && extra.wrongs && extra.wrongs.length) {
     var lis;
     if (q.type === 'match') lis = extra.wrongs.map(function (i) { return h('li', null, x.pairs[i][0] + ' → ' + x.pairs[i][1]); });
@@ -782,6 +885,7 @@ function newRun(page, cfg) {
 function showQ(s) {
   var q = s.list[s.i];
   var page = s.page, body = page.body;
+  page.el.classList.remove('pr-hint-open');
   body.textContent = '';
   try { page.el.scrollTop = 0; } catch (e) { /* ignore */ }
   var ctx = { q: q, answered: false };
@@ -798,7 +902,7 @@ function showQ(s) {
   var card = h('section', { class: 'card q-card', 'aria-label': 'السؤال' }, meta, promptNode(q));
   var view = (VIEWS[q.kind] || choiceView)(q, ctx);
   card.appendChild(view.el);
-  var tools = hintTools(q, card);
+  var tools = s.mode === 'mock' ? null : hintTools(q, card);
   var after = h('div');
   wrap.appendChild(card);
   wrap.appendChild(after);
@@ -898,11 +1002,16 @@ function statParts(t) { return [['صح', t.right], ['غلط', t.wrong], ['متق
 
 /* ----- runs ----- */
 function runPractice(page, pool) {
-  newRun(page, { mode: 'practice', pool: pool, list: makeList(pool, Math.min(ROUND, pool.length)), end: function (s) { endPractice(s, pool); } });
+  function start(size) {
+    newRun(page, { mode: 'practice', pool: pool, list: makeList(pool, Math.min(size, pool.length)), end: function (s) { endPractice(s, pool); } });
+  }
+  if (pool.length && pool.every(function (q) { return q.kb === 'full'; })) {
+    active = null; App.chooseRound(page, start, 'اكتبي نطق كل كلمة. تظهر النتيجة بعد العدد المختار، ويمكنكِ إعادة الأخطاء بعدها.');
+  } else start(ROUND);
 }
 function endPractice(s, pool) {
   var t = tally(s.res), wq = wrongQs(s.res);
-  endScreen(s.page, [resultCard(t.right, t.n, scoreMsg(t.right, t.n), statParts(t))], [
+  var wrap = endScreen(s.page, [resultCard(t.right, t.n, scoreMsg(t.right, t.n), statParts(t))], [
     { label: 'كمّلي', fn: function () { runPractice(s.page, pool); } },
     wq.length ? { label: 'أعيدي الغلط', kind: 'soft', fn: function () { runRedo(s.page, wq, function () { runPractice(s.page, pool); }, 'كمّلي'); } } : null
   ]);
@@ -943,7 +1052,7 @@ function onDocKey(e) {
   if (document.querySelector('.sheet.on')) return;
   var t = e.target;
   if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'INPUT' || t.isContentEditable)) return;
-  if (e.key === ' ' && t && t.tagName === 'BUTTON') return;   /* let Space press the focused button */
+  if ((e.key === ' ' || e.key === 'Enter') && t && t.tagName === 'BUTTON') return;   /* native button activation */
   if (s.onKey(e)) e.preventDefault();
 }
 App.onReady(function () { document.addEventListener('keydown', onDocKey); });
@@ -995,7 +1104,7 @@ function statsCard(pool, f) {
 }
 function renderTab(body, ctx) {
   bank();
-  ctx.setSub('اختاري المحاضرة ونوع السؤال.');
+  ctx.setSub('ابدئي جولة، أو خصّصي اختياركِ.');
   var f = readFilters();
   var lecChips = h('div', { class: 'chips pr-chips' },
     chipBtn('الكل', !f.lec.length, function () { toggle('lec', null); ctx.refresh(); }),
@@ -1007,15 +1116,19 @@ function renderTab(body, ctx) {
     FILTERS.map(function (x) {
       return chipBtn(x.ar, f.types.indexOf(x.k) > -1, function () { toggle('types', x.k, FILTERS.length); ctx.refresh(); });
     }));
-  body.appendChild(h('section', { class: 'card filter' }, h('h3', null, 'المحاضرة'), lecChips, h('h3', null, 'نوع السؤال'), typeChips));
+  body.appendChild(h('p', { class: 'pr-small', richText: 'اختياركِ: ' + (f.lec.length ? f.lec.join(', ') : 'كل المحاضرات') + ' · ' + (f.types.length ? FILTERS.filter(function (x) { return f.types.indexOf(x.k) >= 0; }).map(function (x) { return x.ar; }).join('، ') : 'كل أنواع الأسئلة') }));
   body.appendChild(statsCard(poolFor(f.lec, f.types), f));
+  body.appendChild(h('details', { class: 'more', style: 'margin-top:14px' }, h('summary', null, 'خصّصي التدريب', App.icon('down')),
+    h('section', { class: 'filter more-in' }, h('h3', null, 'المحاضرة'), lecChips, h('h3', null, 'نوع السؤال'), typeChips)));
   var P = prefs(), run = validMockRun(), last = P.mockLast;
   var mockSub = run ? 'كمّلي من السؤال ' + (run.i + 1) : (last && last.score != null ? 'آخر نتيجة: ' + last.score + ' من 20' : '20 سؤالًا بنمط الواجب');
-  var wrong = App.wrongIds().filter(function (id) { return !!getQ(id); }).length;
+  var wrong = App.wrongIds().length;
   body.appendChild(App.secHead('أكثر'));
   body.appendChild(h('div', { class: 'list' },
+    App.row({ title: 'الحروف الصعبة', sub: 'دلائل الكتابة وتدريب المتشابهات', icon: 'compass', iconBg: 'var(--l3-btn)', onClick: function () { App.go('hard-vowels'); } }),
+    App.row({ title: 'كيف أكتب النطق؟', sub: 'من الكلمة إلى النطق الكامل', icon: 'doc', iconBg: 'var(--l3-btn)', onClick: function () { App.go('how-to-transcribe'); } }),
     App.row({ title: 'اختبار تجريبي', sub: mockSub, icon: 'mock', iconBg: 'var(--l2-btn)', onClick: function () { App.go('mock'); } }),
-    App.row({ title: 'مراجعة الأخطاء', sub: wrong ? null : 'ما عندكِ أخطاء حاليًا', meta: wrong ? String(wrong) : null, icon: 'redo', iconBg: 'var(--l3-btn)', onClick: function () { App.go('mistakes'); } })));
+    App.row({ title: 'مراجعة الأخطاء', sub: wrong ? null : 'ليس لديكِ أخطاء حاليًا.', meta: wrong ? String(wrong) : null, icon: 'redo', iconBg: 'var(--l3-btn)', onClick: function () { App.go('mistakes'); } })));
 }
 App.registerTab('practice', renderTab);
 
@@ -1034,6 +1147,12 @@ App.registerPage('practice-task', function (o) {
   if (!pool.length) pool = bank().slice();
   return sessionPage('تدريب', task ? task.lec : null, function (page) {
     if (count < goal) runTask(page, pool, goal, count, task); else runPractice(page, pool);
+  });
+});
+
+App.registerPage('full-transcription', function () {
+  return sessionPage('النطق الكامل', null, function (page) {
+    runPractice(page, bank().filter(function (q) { return q.kb === 'full'; }));
   });
 });
 
@@ -1180,7 +1299,7 @@ function mistakesHome(page) {
   }
   var nodes = [h('section', { class: 'card pr-intro' },
     h('h2', null, qCount(qs.length)),
-    h('p', null, qs.length === 1 ? 'إجابتكِ الأخيرة عليه خاطئة. أعيديه حتى تصير صحيحة.' : 'إجابتكِ الأخيرة عليها خاطئة. أعيديها حتى تصير صحيحة.'))];
+    h('p', null, qs.length === 1 ? 'أخطأتِ في هذا السؤال آخر مرة. جرّبي إجابته مرة أخرى.' : 'أخطأتِ في هذه الأسئلة آخر مرة. جرّبي إجابتها مرة أخرى.'))];
   LECS.forEach(function (l) {
     var part = qs.filter(function (q) { return q.lec === l; });
     if (!part.length) return;

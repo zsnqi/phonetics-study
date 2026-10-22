@@ -51,7 +51,7 @@
     --l1:#40C8E0; --l1-ink:#64D2E6; --l1-wash:rgba(64,200,224,.18); --l1-card:#0F2629; --l1-btn:#0E7C8F;
     --l2:#7D7AFF; --l2-ink:#A3A1FF; --l2-wash:rgba(125,122,255,.2); --l2-card:#1C1B33; --l2-btn:#5653D9;
     --l3:#FF4D6D; --l3-ink:#FF7C95; --l3-wash:rgba(255,77,109,.17); --l3-card:#2A1A1F; --l3-btn:#D92A52;
-    --l4:#FFB340; --l4-ink:#FFC266; --l4-wash:rgba(255,179,64,.17); --l4-card:#2A2112; --l4-btn:#B36A00;
+    --l4:#FFB340; --l4-ink:#FFC266; --l4-wash:rgba(255,179,64,.17); --l4-card:#2A2112; --l4-btn:#A35700;
     --bar:rgba(22,22,24,.78); --bar-line:rgba(84,84,88,.6);
     --skin:#3A3A3C; --skin-line:#6A6A6E; --air:#1C1C1E; --tooth:#E5E5EA; --tongue:#D9506F; --tongue-line:#FF8AA3; --tongue-dot:#FFFFFF;
     --ok:#30D158; --ok-bg:rgba(48,209,88,.18);
@@ -70,7 +70,7 @@
   --l1:#40C8E0; --l1-ink:#64D2E6; --l1-wash:rgba(64,200,224,.18); --l1-card:#0F2629; --l1-btn:#0E7C8F;
   --l2:#7D7AFF; --l2-ink:#A3A1FF; --l2-wash:rgba(125,122,255,.2); --l2-card:#1C1B33; --l2-btn:#5653D9;
   --l3:#FF4D6D; --l3-ink:#FF7C95; --l3-wash:rgba(255,77,109,.17); --l3-card:#2A1A1F; --l3-btn:#D92A52;
-  --l4:#FFB340; --l4-ink:#FFC266; --l4-wash:rgba(255,179,64,.17); --l4-card:#2A2112; --l4-btn:#B36A00;
+  --l4:#FFB340; --l4-ink:#FFC266; --l4-wash:rgba(255,179,64,.17); --l4-card:#2A2112; --l4-btn:#A35700;
   --bar:rgba(22,22,24,.78); --bar-line:rgba(84,84,88,.6);
   --skin:#3A3A3C; --skin-line:#6A6A6E; --air:#1C1C1E; --tooth:#E5E5EA; --tongue:#D9506F; --tongue-line:#FF8AA3; --tongue-dot:#FFFFFF;
   --ok:#30D158; --ok-bg:rgba(48,209,88,.18);
@@ -127,16 +127,16 @@ bdi,.ltr{unicode-bidi:isolate}
 .under.shift::after{opacity:.1}
 
 /* top bars */
-.topbar{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:minmax(88px,1fr) auto minmax(88px,1fr);align-items:center;
+.topbar{position:sticky;top:0;z-index:5;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);column-gap:12px;align-items:center;
   padding:env(safe-area-inset-top) 6px 0;height:calc(44px + env(safe-area-inset-top));
   background:transparent;border-bottom:0.5px solid transparent;transition:background .2s,border-color .2s}
-.topbar .bar-title{font-size:17px;font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw}
+.topbar .bar-title{font-size:17px;font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50vw}
 .topbar.large .bar-title{opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s}
 .topbar.scrolled{background:var(--bar);border-bottom-color:var(--bar-line);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
 .topbar.large.scrolled .bar-title{opacity:1;transform:none}
 .page .topbar{background:var(--bar);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
-.bar-end{justify-self:end;display:flex;align-items:center}
-.bar-start{justify-self:start;display:flex;align-items:center;min-width:0}
+.bar-end{justify-self:end;display:flex;align-items:center;min-width:0;max-width:100%}
+.bar-start{justify-self:start;display:flex;align-items:center;min-width:0;max-width:100%;overflow:hidden}
 .back{display:inline-flex;align-items:center;gap:3px;min-height:44px;padding:0 8px 0 10px;color:var(--tint);font-size:17px;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 .back svg{width:13px;height:21px;flex:none}
 .back span{min-width:0;overflow:hidden;text-overflow:ellipsis}
@@ -337,6 +337,19 @@ details.more .more-in .card,details.more .more-in .list{box-shadow:none;backgrou
 .wchip svg{width:14px;height:14px;color:var(--acc-ink);flex:none}
 .wchip.playing{background:var(--acc-wash)}
 .wchip:active{transform:scale(.96)}
+/* clue rows (spelling → IPA → word) and reference chips */
+.clue{display:flex;flex-direction:column;direction:ltr;padding-block:2px}
+.clue:not(:last-child){border-bottom:1px solid var(--sep)}
+.clue-line{display:flex;align-items:center;gap:10px;min-height:52px}
+.clue-sp{display:inline-flex;align-items:baseline;gap:5px;font-size:19px;font-weight:700;white-space:nowrap}
+.clue-sp .t-en{font-size:19px;font-weight:700}
+.clue-after{color:var(--label2);font-weight:500}
+.clue-arrow{color:var(--label3);font-size:18px;flex:none}
+.clue-tag{align-self:flex-end;margin-top:2px;font-size:13px;color:var(--label2);line-height:1.4;text-align:end}
+.clue-warn{background:var(--acc-wash);border-radius:12px;padding-inline:10px}
+.ref-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:22px;background:var(--fill);font-size:14px;color:var(--acc-ink)}
+.ref-chip svg{width:16px;height:16px;flex:none}
+.ref-chip:active{transform:scale(.97)}
 .spell{padding:6px 0}
 .sp-row{display:grid;grid-template-columns:62px 1fr;gap:10px;align-items:start;padding:12px 14px}
 .sp-row + .sp-row{border-top:0.5px solid var(--sep)}
@@ -597,12 +610,79 @@ details.more .more-in .card,details.more .more-in .list{box-shadow:none;backgrou
 /* sheet (in-page dialog) */
 .sheet-bg{position:absolute;inset:0;z-index:50;background:rgba(0,0,0,.32);opacity:0;transition:opacity .25s}
 .sheet-bg.on{opacity:1}
-.sheet{position:absolute;inset-inline:0;bottom:0;z-index:51;padding:18px 16px calc(16px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;background:var(--bg);box-shadow:var(--sheet-shadow);transform:translateY(105%);transition:transform .35s cubic-bezier(.32,.72,0,1)}
+.sheet{position:absolute;inset-inline:0;bottom:0;z-index:51;padding:18px 16px calc(16px + env(safe-area-inset-bottom));border-radius:20px 20px 0 0;background:var(--bg);box-shadow:var(--sheet-shadow);transform:translateY(105%);transition:transform .35s cubic-bezier(.32,.72,0,1);max-height:calc(100% - 56px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .sheet.on{transform:none}
-.sheet h2{font-size:20px;font-weight:700}
+.sheet-grab{width:36px;height:5px;border-radius:3px;background:var(--fill2);margin:0 auto 10px;flex:none;touch-action:none}
+.sheet-grab-zone{position:absolute;top:0;inset-inline-start:0;inset-inline-end:56px;height:44px;z-index:2;touch-action:none}
+.sheet-x{position:absolute;top:6px;inset-inline-end:6px;z-index:3;display:grid;place-items:center;width:44px;height:44px;border-radius:22px;color:var(--label2)}
+.sheet-x svg{width:14px;height:14px}
+.sheet-x:active{background:var(--fill)}
+.sheet>h2{font-size:20px;font-weight:700;padding-inline-end:44px}
 .sheet p{margin-top:8px;font-size:15px;color:var(--label2);line-height:1.55}
 .sheet textarea{width:100%;height:96px;margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid var(--sep);background:var(--card);color:var(--label);font:13px/1.4 ui-monospace,Menlo,monospace;direction:ltr;resize:none}
 .sheet .btn{margin-top:12px}
+.study-detail-open{width:100%;min-height:44px;display:flex;align-items:center;gap:4px;padding:0 2px;text-align:start;font-size:14px;font-weight:500;color:var(--tint)}
+.study-detail-open svg{width:14px;height:14px;flex:none}
+.study-detail.more{border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
+.study-detail.more>.study-detail-open{justify-content:space-between;gap:10px;min-height:50px;padding:10px 16px;font-size:16px;font-weight:600;color:var(--label)}
+.study-detail.more>.study-detail-open svg{color:var(--label3)}
+.study-detail-sheet>details{margin-top:12px}
+.study-detail-sheet>details>summary{display:none}
+.study-detail-sheet{display:flex;flex-direction:column;max-height:calc(100% - 56px)}
+.study-detail-sheet>details{min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+
+/* Compact written-letter → pronunciation pairs, transcription guide step 1. */
+.round-choice{padding:18px}.round-choice h2{font-size:22px}.round-choice p{margin:14px 0;color:var(--label2);font-size:15px}
+.round-size{display:flex;align-items:center;gap:10px;margin-top:14px}.round-segments{display:flex;direction:ltr;background:var(--fill);border-radius:10px;padding:3px;gap:3px}
+.round-segments button{display:grid;place-items:center;min-width:64px;min-height:44px;border-radius:8px;font-size:17px}.round-segments button[aria-pressed="true"]{background:var(--card);color:var(--acc-ink);box-shadow:var(--shadow)}
+.study-page .hd-floor-meaning{display:block;font-size:12px;line-height:1.45;margin-top:2px;text-align:start}
+.study-page .hd-lift{grid-template-columns:minmax(0,1fr) 90px}.study-page .hd-floor-head .t-ipa{font-size:24px}
+.study-page .hd-floor-head{gap:8px}.study-page .hd-floor .exam-line{font-size:11px}
+.hd-page.study-page .hd-floor-head{line-height:1.1}
+.hd-page.study-page .hd-lips{margin-top:8px}
+.study-page .tr-r-note{display:block;color:var(--acc-ink);font-size:14px;min-height:44px;text-align:start}
+.tr-copy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+.tr-copy-table{width:100%;border-collapse:collapse;text-align:center;table-layout:auto}
+.tr-copy-table th{font-size:12px;font-weight:500;color:var(--label2);padding-bottom:4px}
+.tr-copy-table td{font-size:18px;line-height:1.4;padding:1px 0}
+.tr-copy-table td:nth-child(2){font-size:12px;color:var(--label2)}
+.tr-copy-table .t-ipa{font-size:20px}
+.tr-copy.tr-card,.tr-worked.tr-card{padding:12px;margin-top:10px}
+.tr-copy p,.tr-worked p,.tr-copy-task{font-size:15px}
+.tr-worked h3{font-size:17px;margin-bottom:4px}
+.tr-worked ol{list-style:decimal;padding-inline-start:20px;font-size:15px;line-height:1.6}
+.tr-worked li+li{margin-top:4px}
+.tr-worked .tr-example{margin-inline-start:6px;padding:4px 8px;font-size:16px}
+.tr-worked>p{margin-top:6px}.tr-copy-task{margin-top:10px}
+
+/* Keep the shared step controls and the complete lesson on one phone screen. */
+.study-page .tr-copy-table td{line-height:1.3;padding-block:0}
+.study-page .tr-consonants-intro{font-size:15px;line-height:1.5}
+.lesson-steps .study-stage>.blk{margin-top:6px}
+.lesson-steps .study-stage>.blk-h{margin-top:8px}
+.lesson-steps .def{padding:10px 12px}
+.lesson-steps .blk-list{padding:8px 12px}
+.lesson-steps .blk-list li{padding-block:4px}
+.lesson-steps .tree{padding:10px}
+.lesson-steps .tree .t-root{padding-bottom:8px}
+.lesson-steps .tree .t-kid{padding:6px}
+.lesson-steps .note{padding:8px 10px;font-size:14px;line-height:1.45}
+.lesson-steps .vx .readout{padding:8px}
+.lesson-steps .vx .exam-line{margin-top:6px;padding:6px 10px}
+.lesson-steps .vx .ro-top{grid-template-columns:minmax(0,1fr) 100px}
+.lesson-steps .vx .ro-sym{height:50px;font-size:46px}
+.lesson-steps .vx .feat div{padding-block:4px}
+.lesson-steps .vx .feat,.lesson-steps .vx .ro-more{margin-top:4px}
+.lesson-steps .vx .chart-card{margin-top:8px;padding:4px 8px}
+.lesson-steps .vx .chart{max-width:270px;margin-inline:auto}
+.lesson-steps .vx .explore{margin-top:4px;padding-top:6px}
+.lesson-steps .vx .ex-head{min-height:26px;padding-bottom:4px}
+.lesson-steps .vx-glide .ro-top{grid-template-columns:minmax(0,1fr) 88px}
+.lesson-steps .vx-glide .ro-main{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:4px;align-items:center}
+.lesson-steps .vx-glide .vx-symrow{grid-row:span 2}
+.lesson-steps .vx-glide .vx-gl-grp{margin-top:0;font-size:12px}
+.lesson-steps .vx-glide .word b{font-size:18px}
+.lesson-steps .vx-glide .ro-word{gap:4px}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
@@ -640,5 +720,7 @@ details.more .more-in .card,details.more .more-in .list{box-shadow:none;backgrou
 <script src="./app-vowels.js"></script>
 <script src="./app-practice.js"></script>
 <script src="./app-more.js"></script>
+<script src="./app-hard.js"></script>
+<script src="./app-transcribe.js"></script>
 </body>
 </html>
