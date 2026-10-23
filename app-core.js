@@ -1366,7 +1366,7 @@ function startTask(task) {
 }
 
 /* pages by name; modules register their own (see app-api.md) */
-var PAGE_TITLES = { mock: 'اختبار تجريبي', mistakes: 'مراجعة الأخطاء', summary: 'ملخص ليلة الاختبار', assignment: 'حل Assignment 2', settings: 'الإعدادات' };
+var PAGE_TITLES = { mock: 'اختبار تجريبي', mistakes: 'مراجعة الأخطاء', summary: 'ملخص ليلة الاختبار', assignment: 'حل Assignment 2', settings: 'الإعدادات', 'memory-map': 'خريطة الحفظ' };
 var PAGE_FALLBACK = {
   'practice-task': function () { showTab('practice'); return null; },
   'cards-task': function () { showTab('cards'); return null; }
@@ -1533,7 +1533,8 @@ function lecturesCard() {
 function extrasList() {
   var wrong = wrongIds().length;
   return h('div', { class: 'list' },
-    row({ title: 'الحروف الصعبة', sub: 'دلائل الكتابة وتدريب المتشابهات', icon: 'compass', iconBg: 'var(--l3-btn)', onClick: function () { go('hard-vowels'); } }),
+    row({ title: 'خريطة الحفظ', sub: 'كلمات تشترك في الكتابة والصوت', icon: 'list', iconBg: 'var(--l3-btn)', onClick: function () { go('memory-map'); } }),
+    row({ title: 'الحروف الصعبة', sub: 'تدريب المتشابهات', icon: 'compass', iconBg: 'var(--l3-btn)', onClick: function () { go('hard-vowels'); } }),
     row({ title: 'اختبار تجريبي', icon: 'mock', iconBg: 'var(--l2-btn)', onClick: function () { go('mock'); } }),
     row({ title: 'مراجعة الأخطاء', icon: 'redo', iconBg: 'var(--l3-btn)', meta: wrong ? String(wrong) : null, onClick: function () { go('mistakes'); } }),
     row({ title: 'ملخص ليلة الاختبار', icon: 'moon', iconBg: 'var(--l4-btn)', onClick: function () { go('summary'); } }),
@@ -1570,10 +1571,16 @@ function renderLessons(el) {
   /* Guides that live in the Lessons tab but are not lessons: no check mark and
      they never change the done/total counts, the plan or the Today card. */
   var guides = {
-    L3: { after: 'l3-long', title: 'الحروف الصعبة', sub: 'دلائل الكتابة وتدريب المتشابهات',
-      icon: 'compass', iconBg: 'var(--l3-btn)', page: 'hard-vowels' },
-    L4: { after: 'l4-rpga', title: 'كيف أكتب النطق؟', sub: 'من الكلمة إلى النطق الكامل',
-      icon: 'doc', iconBg: 'var(--l4-btn)', page: 'how-to-transcribe' }
+    L3: [
+      { after: 'l3-long', title: 'الحروف الصعبة', sub: 'تدريب المتشابهات',
+        icon: 'compass', iconBg: 'var(--l3-btn)', page: 'hard-vowels' },
+      { after: 'l3-long', title: 'خريطة الحفظ', sub: 'كلمات تشترك في الكتابة والصوت',
+        icon: 'list', iconBg: 'var(--l3-btn)', page: 'memory-map' }
+    ],
+    L4: [
+      { after: 'l4-rpga', title: 'كيف أكتب النطق؟', sub: 'من الكلمة إلى النطق الكامل',
+        icon: 'doc', iconBg: 'var(--l4-btn)', page: 'how-to-transcribe' }
+    ]
   };
   LECS.forEach(function (k) {
     var ls = all.filter(function (L) { return L.lec === k; });
@@ -1583,7 +1590,7 @@ function renderLessons(el) {
       h('span', { style: 'display:inline-flex;align-items:center;gap:6px' }, tag(k), ((D.lectures || {})[k] || {}).ar || k),
       h('b', { class: 'num' }, dn + ' من ' + ls.length));
     f.body.appendChild(head);
-    var guide = guides[k] || null;
+    var guideList = guides[k] || [];
     var items = [];
     ls.forEach(function (L) {
       var done = lessonDone(L.id);
@@ -1591,12 +1598,13 @@ function renderLessons(el) {
         title: L.ar, sub: [L.min + ' د · ', h('bdi', { dir: 'ltr', class: 'en' }, L.en)], check: done,
         onClick: function () { openLesson(L.id); }
       }));
-      if (guide && guide.after === L.id) {
+      guideList.forEach(function (guide) {
+        if (guide.after !== L.id) return;
         items.push(row({
           title: guide.title, sub: guide.sub, icon: guide.icon, iconBg: guide.iconBg,
           onClick: function () { go(guide.page); }
         }));
-      }
+      });
     });
     f.body.appendChild(h('div', { class: 'list ' + accClass(k) }, items));
   });

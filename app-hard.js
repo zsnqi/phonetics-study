@@ -16,13 +16,6 @@ var CSS = `
 .hd-group>div{display:grid;justify-items:center;gap:4px;min-width:0}
 .hd-group .t-ipa{font-size:28px}
 .hd-len{font-size:13px;color:var(--label2);text-align:center}
-.hd-card{padding:14px;margin-top:0}
-.hd-card h3{font-size:18px}
-.hd-card-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-.hd-card-head .t-ipa{font-size:28px}
-.hd-card .clue-line{min-height:44px}
-.hd-card .clue-tag{font-size:12px}
-.hd-card-more{margin-top:8px;display:flex;justify-content:flex-start}
 .hd-rtext{line-height:1.6;margin-bottom:6px}
 .hd-word{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:9px 12px;border-radius:11px;background:var(--raised);font-size:16px}
 .hd-word svg{width:16px;height:16px;color:var(--label2)}
@@ -51,6 +44,12 @@ var CSS = `
 .hd-words{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .hd-clue{display:block;font-size:25px;margin-top:10px}.hd-feedback:focus{outline:none}
 .hd-feedback .clue{margin-block:6px}
+.hd-cmp{display:grid;gap:4px;margin:6px 0 10px}
+.hd-cmp-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;min-height:44px}
+.hd-cmp-lab{min-width:52px;font-size:14px;font-weight:600;color:var(--label2)}
+.hd-cmp-row.is-right .hd-cmp-lab{color:var(--acc-ink)}
+.hd-cmp .t-ipa{font-size:24px}
+.hd-cmp .wchip{min-height:44px}
 .hd-result-actions{display:grid;gap:10px;margin-top:16px}
 .hd-mistakes{margin-bottom:18px}.hd-mistakes-only > .pr-endwrap{display:none}
 `;
@@ -102,7 +101,6 @@ var RULES = [
 ];
 RULES.forEach(function (r) {
   r.words = App.lex.filter(function (e) { return r.match(e) && e.v === r.sym; });
-  r.exceptions = App.lex.filter(function (e) { return r.match(e) && e.v !== r.sym; });
 });
 RULES = RULES.filter(function (r) { return r.words.length >= 2; });
 
@@ -113,15 +111,29 @@ var POOL = App.lex.filter(function (e) {
 function group(sym) { return GROUPS.filter(function (g) { return g.indexOf(sym) >= 0; })[0]; }
 function rowOf(r, sym, w, tag) { return App.clueRow({ clue: r.clue, after: r.after, sym: sym, word: w, tag: tag }); }
 /* Feedback node. node.showsSym tells the caller the symbol is already on screen. */
-function explanation(e, wrong) {
+function cmpRow(label, sym, chips, right) {
+  var r = h('div', { class: 'hd-cmp-row' + (right ? ' is-right' : '') }, h('span', { class: 'hd-cmp-lab', text: label }), App.ipaEl(sym));
+  chips.forEach(function (w) { r.appendChild(App.wordChip(w, { trans: false })); });
+  return r;
+}
+/* Two rows, examples on their own rows: what she picked, then the right sound. */
+function comparison(e, picked, rowFollows) {
+  var right = [];
+  var same = e.w.toLowerCase() === KEYS[e.v];
+  if (!(rowFollows && same)) right.push(KEYS[e.v]);
+  if (!rowFollows && !same) right.push(e.w);
+  return h('div', { class: 'hd-cmp' }, cmpRow('اخترتِ', picked, [KEYS[picked]], false), cmpRow('الصح', e.v, right, true));
+}
+function explanation(e, wrong, picked) {
   var box = h('div', null);
   var r = RULES.filter(function (x) { return x.sym === e.v && x.match(e); })[0];
+  var broken = r ? null : RULES.filter(function (x) { return x.sym !== e.v && x.match(e); })[0];
+  if (wrong && picked && KEYS[picked]) { box.appendChild(comparison(e, picked, !!(r || broken))); box.cmp = true; }
   if (r) {
     box.appendChild(rowOf(r, e.v, e.w, r.tag));
     box.appendChild(h('p', { class: 'fb-why' }, wrong ? 'هذا ما يقوله الدليل هنا.' : 'القاعدة تنطبق هنا.'));
     box.showsSym = true; return box;
   }
-  var broken = RULES.filter(function (x) { return x.sym !== e.v && x.match(e); })[0];
   if (broken) {
     box.appendChild(rowOf(broken, e.v, e.w, ''));
     box.appendChild(h('p', { class: 'fb-why' }, 'هذه الكلمة استثناء. اسمعيها واحفظي نطقها.'));
@@ -138,54 +150,6 @@ function word(e, showVowel) {
 function heading(text) { return App.secHead(text); }
 function btn(text, fn, kind) { return h('button', { class: 'btn ' + (kind || 'btn-primary'), type: 'button', onclick: fn }, text); }
 
-/* Each rail owns its horizontal gestures; the outer steps stay in place. */
-function rail(cards, labels, initial, remember) {
-  var row = h('div', { class: 'study-rail', tabindex: '0', 'aria-label': 'اسحبي لعرض البطاقة التالية' }, cards);
-  var pos = initial || 0, count = h('span', { class: 'rail-count' }, h('span', { class: 'rc-label' }), ' · ', h('span', { class: 'rc-n num' }));
-  function paint() { count.firstChild.innerHTML = App.richText(labels[pos]); count.lastChild.textContent = (pos + 1) + ' من ' + cards.length; }
-  paint();
-  function show(n) {
-    pos = Math.max(0, Math.min(cards.length - 1, n));
-    row.scrollLeft = -pos * (row.clientWidth + 12);
-    if (remember) remember(pos);
-    paint();
-  }
-  row.addEventListener('scroll', function () {
-    pos = Math.round(Math.abs(row.scrollLeft) / (row.clientWidth + 12));
-    pos = Math.min(cards.length - 1, pos);
-    if (remember && row.isConnected) remember(pos);
-    paint();
-  }, { passive: true });
-  row.addEventListener('keydown', function (ev) {
-    if (ev.target !== row || !/ArrowLeft|ArrowRight/.test(ev.key)) return;
-    ev.preventDefault(); show(pos + (ev.key === 'ArrowLeft' ? 1 : -1));
-  });
-  var root = h('div', null, row, h('div', { class: 'study-rail-nav' },
-    btn('البطاقة السابقة', function () { show(pos - 1); }, 'text-btn'), count,
-    btn('البطاقة التالية', function () { show(pos + 1); }, 'text-btn')));
-  root.show = show;
-  if (initial) requestAnimationFrame(function () { show(initial); });
-  return root;
-}
-/* One symbol card: header, one clue row per rule, and an exceptions sheet. */
-function ruleCard(sym) {
-  var mine = RULES.filter(function (r) { return r.sym === sym; });
-  var card = h('section', { class: 'card hd-card' },
-    h('div', { class: 'hd-card-head', dir: 'ltr' }, App.ipaEl(sym), word(App.lexWord(KEYS[sym]))));
-  mine.forEach(function (r) { card.appendChild(rowOf(r, sym, r.words[0].w, r.tag)); });
-  var rows = [];
-  mine.forEach(function (r) {
-    r.exceptions.forEach(function (e) { rows.push({ r: r, e: e }); });
-  });
-  rows = rows.slice(0, 12);
-  if (rows.length) {
-    card.appendChild(h('div', { class: 'hd-card-more' }, App.refChip('استثناءات', function () {
-      var body = h('div', null, rows.map(function (x) { return rowOf(x.r, x.e.v, x.e.w, 'استثناء'); }));
-      App.sheet({ title: 'استثناءات', body: body });
-    })));
-  }
-  return card;
-}
 function rContent() {
   var d = h('div', null, h('p', { class: 'hd-rtext', richText: 'في اللهجة البريطانية لا يُنطق الحرف r إذا لم يأتِ بعده حرف صوتي.' }));
   [{ clue: 'ar', sym: 'ɑː', word: 'card' }, { clue: 'or', sym: 'ɔː', word: 'horse' }, { clue: 'ir', sym: 'ɜː', word: 'bird' },
@@ -224,7 +188,6 @@ function pairWords() {
 App.registerPage('hard-vowels', function (o) {
   ensureCSS();
   return App.openPage('الحروف الصعبة', function (body, page) {
-    var cards, initialCard = o && o.section === 'silent-r' ? 7 : null;
     var steps = [
       { id: 'groups', title: '7 أصوات متشابهة', build: function (el) {
         el.appendChild(h('div', { class: 'hd-groups' }, GROUPS.map(function (g) {
@@ -234,13 +197,6 @@ App.registerPage('hard-vowels', function (o) {
         })));
         el.appendChild(h('div', { class: 'hd-chips' }, App.refChip('وصف الاختبار', function () { App.showExamSheet(); })));
       } },
-      { id: 'spelling', title: 'الكتابة أولًا', build: function (el, memory) {
-        el.appendChild(h('p', { class: 'hd-intro' }, 'اقرئي الحروف المكتوبة، ثم اسمعي الكلمة.'));
-        var rCard = h('section', { class: 'card hd-card', id: 'hd-silent-r' }, h('h3', { richText: 'الحرف المكتوب r' }), rContent());
-        cards = rail(SYMBOLS.map(function (sym) { return ruleCard(sym); }).concat([rCard]), SYMBOLS.map(function (s) { return 'الحرف /' + s + '/'; }).concat(['قاعدة r']), initialCard != null ? initialCard : Math.max(0, Math.min(7, +memory.card || 0)), function (n) { memory.card = n; App.save(); });
-        initialCard = null;
-        el.appendChild(cards);
-      } },
       { id: 'ear', title: 'قارني بالأذن', build: function (el) {
         el.appendChild(h('p', { class: 'hd-intro' }, 'اسمعي الكلمة، ثم اسمعي كلمة المفتاح.'));
         el.appendChild(h('div', { class: 'hd-pairs' }, pairWords().map(function (p) {
@@ -248,7 +204,11 @@ App.registerPage('hard-vowels', function (o) {
         })));
       } }
     ];
-    App.teachingSteps(body, page, 'hard-vowels', steps, { initial: o && o.section === 'silent-r' ? 'spelling' : o && o.initial, openIndex: o && o.openIndex, action: 'ابدئي التمرين', done: function () { App.go('hard-drill'); } });
+    /* A saved step that no longer exists (the old spelling step) restarts at the first step. */
+    var mem = App.state && App.state.prefs && App.state.prefs.studySteps, saved = mem && mem['hard-vowels'];
+    if (saved != null && !(typeof saved === 'object' && steps.some(function (s) { return s.id === saved.id; }))) delete mem['hard-vowels'];
+    App.teachingSteps(body, page, 'hard-vowels', steps, { initial: o && o.initial, openIndex: o && o.openIndex, action: 'ابدئي التمرين', done: function () { App.go('hard-drill'); } });
+    if (o && o.section === 'silent-r') setTimeout(function () { App.showRSheet(); }, 0);
   }, { acc: 'L3', className: 'hd-page' });
 });
 
@@ -319,11 +279,11 @@ function run(page, entries, review) {
           var value = b.getAttribute('data-vowel');
           b.classList.add(value === e.v ? 'right' : value === s ? 'wrong' : 'muted');
         });
-        var why = explanation(e, !ok);
+        var why = explanation(e, !ok, s);
         var fb = h('section', { class: 'fb hd-feedback ' + (ok ? 'right' : 'wrong'), tabindex: '-1' },
           h('h3', { class: 'fb-head' }, App.icon(ok ? 'tick' : 'cross'), ok ? 'صح' : 'غلط'),
-          why.showsSym ? null : h('p', { class: 'fb-ans' }, App.ipaEl(e.v)),
-          why.showsSym ? null : h('bdi', { class: 'hd-clue', dir: 'ltr', lang: 'en', html: App.spellHTML(e) }),
+          why.showsSym || why.cmp ? null : h('p', { class: 'fb-ans' }, App.ipaEl(e.v)),
+          why.showsSym || why.cmp ? null : h('bdi', { class: 'hd-clue', dir: 'ltr', lang: 'en', html: App.spellHTML(e) }),
           why,
           !ok ? h('p', { class: 'fb-why' }, 'ستعود هذه الكلمة لاحقًا في الجولة.') : null);
         after.appendChild(fb);

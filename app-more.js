@@ -85,6 +85,22 @@ var CSS = [
   '.mo-ex{display:block;margin-top:2px;font-size:13px;color:var(--label2)}',
   '.mo-ex b{font-weight:700;color:var(--label)}',
   '.mo-ptbl td:first-child{white-space:nowrap;width:1%}',
+  '.mo-fscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;direction:ltr}',
+  '.mo-ftbl{min-width:100%}',
+  '.mo-ftbl th:first-child{padding-left:10px}',
+  '.mo-ftbl th{direction:rtl;white-space:nowrap;text-align:left;padding:10px 8px 6px}',
+  '.mo-ftbl td{padding:8px 6px;font-size:14px}',
+  '.mo-ftbl td:first-child{padding-left:10px}',
+  '.mo-ftbl .mo-fg td{padding:12px 12px 6px;border-top:0.5px solid var(--sep);background:var(--fill);font-size:13px;font-weight:700;color:var(--label2)}',
+  '.mo-ftbl tr.mo-fg:first-child td,.mo-ftbl thead + tbody tr.mo-fg:first-child td{border-top:0}',
+  '.mo-fc1{white-space:nowrap;font-weight:700;font-size:15px}',
+  '.mo-fc2{white-space:nowrap;color:var(--acc-ink);font-size:16px;font-weight:600}',
+  '.mo-fc3{min-width:96px}',
+  '.mo-fc4{min-width:84px;color:var(--bad)}',
+  '.mo-fc4 span{display:block;white-space:nowrap}',
+  '.mo-fc4 span + span{margin-top:2px}',
+  '.mo-ftag{display:block;direction:rtl;text-align:left;margin-top:2px;font-size:12px;font-weight:400;color:var(--label2)}',
+  '.mo-ftag .en{margin:0 .3em;font-weight:700}',
   '.mo-terms .mo-t{padding:10px 14px}',
   '.mo-t + .mo-t{border-top:0.5px solid var(--sep)}',
   '.mo-t-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}',
@@ -805,15 +821,40 @@ function buildSummary(body, page) {
   EXTRA_SLIDE_NOTES.forEach(function (t) { notes.push(t); });
   s6.appendChild(h('div', { class: 'card blk-list blk acc-L3' }, h('ul', null, notes.map(function (x) { return h('li', { rich: x }); }))));
 
+  /* spelling families: a condensed copy of the memory map; nothing is drawn when the data is missing */
+  var famData = (App.D && App.D.families) || (window.PH && window.PH.families);
+  if (!Array.isArray(famData) || !famData.some(function (g) { return g && g.families && g.families.length; })) famData = null;
+  if (famData) {
+    var s7 = section('families', 'احفظيها', 'Spelling families');
+    var frows = [];
+    famData.forEach(function (g) {
+      if (!g || !g.families || !g.families.length) return;
+      frows.push(h('tr', { class: 'mo-fg' }, h('td', { colspan: 4 }, h('bdi', { dir: 'ltr' }, g.spell))));
+      g.families.forEach(function (f) {
+        frows.push(h('tr', null,
+          h('td', { class: 'mo-fc1' }, h('bdi', { dir: 'ltr' }, String(f.chunk).replace(/_/g, '…')), f.tag ? h('span', { class: 'mo-ftag', richText: f.tag }) : null),
+          h('td', { class: 'mo-fc2' }, App.ipaEl(f.sym)),
+          h('td', { class: 'mo-fc3' }, h('bdi', { class: 'mo-ex', dir: 'ltr', style: 'margin-top:0;font-size:14px;color:var(--label)' }, (f.words || []).slice(0, 3).join(' · '))),
+          h('td', { class: 'mo-fc4' }, (f.watch || []).slice(0, 2).map(function (x) {
+            return h('span', { dir: 'ltr' }, x.w + ' ', App.ipaEl(x.sym));
+          }))));
+      });
+    });
+    s7.appendChild(h('div', { class: 'card tbl mo-tbl blk mo-fscroll' }, h('table', { class: 'mo-ftbl', dir: 'ltr' },
+      h('thead', null, h('tr', null, ['الكتابة', 'النطق', 'الكلمات', 'انتبهي'].map(function (t) { return h('th', null, t); }))),
+      h('tbody', null, frows))));
+  }
+
   function drawSummary() {
     nav.textContent = ''; subnav.textContent = '';
     [['vowels', 'الحروف'], ['terms', 'المصطلحات'], ['review', 'مراجعة']].forEach(function (t) {
       nav.appendChild(chip(t[1], summary.tab === t[0], function () { summary.tab = t[0]; drawSummary(); }));
     });
     var choices = summary.tab === 'vowels' ? [['mono', 'الأحادية'], ['diph', 'المزدوجة'], ['tri', 'الثلاثية']]
-      : summary.tab === 'review' ? [['pattern', 'شكل الأسئلة'], ['pairs', 'الأزواج'], ['slides', 'أخطاء الشرائح']] : [];
-    var selected = summary.tab === 'terms' ? 'terms' : summary[summary.tab === 'vowels' ? 'kind' : 'review'];
-    choices.forEach(function (t) { subnav.appendChild(chip(t[1], selected === t[0], function () { summary[summary.tab === 'vowels' ? 'kind' : 'review'] = t[0]; drawSummary(); })); });
+      : summary.tab === 'review' ? (famData ? [['families', 'احفظيها']] : []).concat([['pattern', 'شكل الأسئلة'], ['pairs', 'الأزواج'], ['slides', 'أخطاء الشرائح']]) : [];
+    var selected = summary.tab === 'terms' ? 'terms' : summary.tab === 'review' ? (summary.reviewPicked ? summary.review : (famData ? 'families' : 'pattern')) : summary.kind;
+    if (summary.tab === 'review' && !secEls[selected]) selected = 'pattern';
+    choices.forEach(function (t) { subnav.appendChild(chip(t[1], selected === t[0], function () { if (summary.tab === 'vowels') summary.kind = t[0]; else { summary.review = t[0]; summary.reviewPicked = 1; } drawSummary(); })); });
     keys(secEls).forEach(function (k) { secEls[k].hidden = k !== selected; });
     App.save(); page.el.scrollTop = 0;
   }

@@ -36,7 +36,7 @@
  */
 'use strict';
 
-const VERSION = 'v13';                       // bump on every shell change
+const VERSION = 'v14';                       // bump on every shell change
 const AUDIO_VERSION = 'v1';                 // bump only to throw away all cached audio
 
 const SHELL_PREFIX = 'phonetics-shell-';
@@ -50,8 +50,8 @@ const INDEX_URL = abs('./index.html');
 
 // Must be cached or the install fails (the worker then retries later; the old one keeps running).
 const SHELL_REQUIRED = [
-  './', './index.html', './data.js',
-  './app-core.js', './app-vowels.js', './app-practice.js', './app-more.js', './app-hard.js', './app-transcribe.js',
+  './', './index.html', './data.js', './data-families.js',
+  './app-core.js', './app-vowels.js', './app-practice.js', './app-more.js', './app-hard.js', './app-transcribe.js', './app-map.js',
   './manifest.webmanifest',
 ].map(abs);
 // Best effort: a failure is logged but does not block the install.
